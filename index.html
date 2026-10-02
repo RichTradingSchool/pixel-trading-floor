@@ -1,0 +1,1246 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PIXEL TRADING FLOOR — AI 직원 13명이 토론하는 트레이딩 오피스</title>
+<meta name="description" content="애널리스트·토론·리스크 위원회·PM까지 13명의 AI 직원이 코인을 분석하고 판정하는 픽셀 트레이딩 오피스. 페이지에서 바로 모의 분석을 돌려 보고, AI 실제 버전은 텔레그램 자료실에서 받으세요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PIXEL TRADING FLOOR · AI 트레이딩 오피스">
+<meta property="og:description" content="AI 직원 13명이 토론하고 판정하는 트레이딩 오피스 — 지금 페이지에서 바로 돌려 보세요.">
+<meta property="og:image" content="https://richtradingschool.github.io/pixel-trading-floor/img/og.png">
+<meta property="og:url" content="https://richtradingschool.github.io/pixel-trading-floor/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#05070c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' rx='3' fill='%230c111c'/%3E%3Crect x='4' y='2' width='8' height='3' fill='%23e8c86a'/%3E%3Crect x='4' y='5' width='8' height='4' fill='%23f0c8a0'/%3E%3Crect x='5' y='6' width='6' height='1' fill='%23141018'/%3E%3Crect x='3' y='10' width='10' height='4' fill='%232a2a34'/%3E%3Crect x='7' y='10' width='2' height='3' fill='%23c9a84a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css">
+<script>
+(function (d) {
+  d.classList.add('js');
+  try {
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      d.classList.add('motion', 'anim-pending');
+      setTimeout(function () { d.classList.remove('anim-pending'); }, 3500); // 애니메이션 라이브러리가 안 오면 그대로 보여 준다
+    }
+  } catch (e) {}
+})(document.documentElement);
+</script>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ===== PIXEL TRADING FLOOR 전용 — base.css(초파리 랜딩 복사본) 위에 얹는다 ===== */
+.pixel{font-family:"Galmuri11",monospace;letter-spacing:.02em}
+.logo .mark canvas,.flogo canvas{width:20px;height:20px;image-rendering:pixelated}
+.tk-note{color:var(--mute);font-size:12px;font-weight:700}
+.sub-card{display:flex;flex-direction:column;gap:4px;margin-top:22px;max-width:560px;padding:14px 18px;border-radius:16px;border:1px solid rgba(217,119,87,.45);background:linear-gradient(135deg,rgba(217,119,87,.16),rgba(12,15,22,.5) 70%);text-decoration:none;color:var(--text);transition:border-color .25s,transform .35s var(--ease)}
+.sub-card:hover{border-color:#e7a184;transform:translateY(-2px)}
+.sub-card b{font-size:15.5px;font-weight:850;color:#f1b49a;letter-spacing:-.02em}
+.sub-card span{font-size:14px;color:var(--text-2);font-weight:600;line-height:1.55}
+.sub-card small{font-size:12px;color:var(--faint);font-weight:650}
+.tk-rich{text-decoration:none;color:var(--gold);font-weight:750}
+.tk-rich[hidden]{display:none}
+.tk-rich .dot{width:6px;height:6px;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.tk-virt{font-size:10.5px;font-weight:700;color:var(--mute);padding:1px 6px;border-radius:6px;border:1px solid var(--line-2)}
+
+/* 히어로 — 왼쪽 문구, 오른쪽 모니터 안에서 데모 버전이 스스로 분석 (PC) · 휴대폰은 캡처 */
+.hero-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:44px;align-items:center;width:100%}
+.hero-grid h1{font-size:clamp(40px,4.6vw,64px)}
+.office .monitor{max-width:none;padding:8px;border-radius:20px}
+.office-cap{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 9px;margin:14px 0 0;font-size:13px;color:var(--mute);font-weight:650;text-align:center}
+.office-cap .dot{background:var(--long);animation:ping 1.8s infinite}
+/* 캡처(휴대폰·움직임 줄이기·로딩 중)에는 LIVE·실시간 표시를 하지 않는다 — 시연이 실제로 돌 때만 */
+.office:not(.is-live) .office-cap .dot,.office-screen:not(.live) .live-badge{display:none}
+.office-cap small,.fn{display:block;width:100%;font-size:12px;color:var(--faint);font-weight:600}
+.office-screen{aspect-ratio:1440/900;border-radius:13px}
+.office-screen iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none;background:#000}
+.office-screen img{position:absolute;inset:0;object-position:top;transition:opacity .8s var(--ease),transform 1.2s var(--ease)}
+.office-screen.live img{opacity:0}
+
+/* TradingAgents — 깃허브 저장소 카드(다크 테마 값) + 논문 도식(원본 색) 위에 픽셀 직원 — 영상 「깃허브 스타」 장면의 결 */
+#framework{padding-top:92px}
+.fw-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:48px;align-items:center}
+.fw-copy h2{margin:14px 0;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.04em;line-height:1.18;font-weight:880}
+.fw-copy h2 em{font-style:normal;color:#f2cc60}
+.fw-copy .sub{margin:0}
+.fw-facts{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
+.fw-facts li{height:30px;display:inline-flex;align-items:center;padding:0 12px;border-radius:99px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);font-size:13px;font-weight:700;color:var(--text-2)}
+.fw-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.fw-note{margin:14px 0 0;font-size:12px;color:var(--faint)}
+.gh{position:relative;display:block;padding:22px;border-radius:20px;background:#0d1117;border:1px solid #30363d;box-shadow:0 40px 90px -40px #000;overflow:hidden;color:#f0f6fc;text-decoration:none;font-family:"Segoe UI",system-ui,"Pretendard Variable",sans-serif;transition:border-color .3s}
+.gh:hover{border-color:#e3b341}
+.gh::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.2px) 0 0/16px 16px;pointer-events:none}
+.gh::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-10%;height:62%;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(227,179,65,.16),transparent 70%);pointer-events:none}
+.gh>*{position:relative;z-index:1}
+.gh-path{font-size:12.5px;color:#9198a1}
+.gh-path b{color:#f0f6fc;font-weight:600}
+.gh-card{margin-top:10px;padding:14px 16px;border-radius:12px;background:#161b22;border:1px solid #30363d}
+.gh-title{display:flex;align-items:center;gap:9px}
+.gh-title svg{width:18px;height:18px;flex:none}
+.gh-title b{font-size:21px;font-weight:600;color:#4493f8}
+.gh-pub{font-size:11px;font-weight:600;color:#9198a1;border:1px solid #3d444d;border-radius:99px;padding:0 8px;line-height:18px}
+.gh-desc{margin:6px 0 0;font-size:13.5px;color:#9198a1}
+.gh-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.gh-tags span{font-size:11.5px;font-weight:600;color:#4493f8;background:rgba(56,139,253,.12);border-radius:99px;padding:2px 10px}
+.gh-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.gh-btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:6px;background:#212830;border:1px solid #3d444d;font-size:12px;font-weight:600;color:#d1d7e0}
+.gh-btn svg{width:14px;height:14px;flex:none}
+.gh-btn i{font-style:normal;padding:1px 7px;border-radius:99px;background:#2f3742;font-size:11.5px;font-variant-numeric:tabular-nums}
+.gh-btn.hot{border-color:#e3b341;box-shadow:0 0 12px rgba(227,179,65,.4)}
+.gh-btn.hot i{background:rgba(227,179,65,.18);color:#f2cc60}
+.gh-big{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px}
+.gh-big svg{width:56px;height:56px;flex:none;filter:drop-shadow(0 0 14px rgba(227,179,65,.55))}
+.gh-num{font-size:clamp(54px,5.6vw,76px);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 22px rgba(227,179,65,.35)}
+.gh-lbl{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px}
+.gh-lbl span{font-size:13px;font-weight:600;color:#9198a1;letter-spacing:.03em}
+.gh-lbl b{font:800 13px/1.4 "Pretendard Variable",sans-serif;color:#f2cc60;background:#3b2e0a;border:1px solid #e3b341;border-radius:99px;padding:2px 10px}
+.gh-lbl b[hidden]{display:none}
+.gh-src{margin:16px 0 0;text-align:center;font:11px/1.5 "Pretendard Variable",sans-serif;color:#6e7681}
+/* 논문 도식 — 원본 색(데이터 크림·리서처 금색·매수 초록·매도 빨강·트레이더 보라·리스크/매니저 파랑)에 픽셀 직원을 앉힌다 */
+.fw-map{position:relative;margin-top:44px;padding:26px 26px 20px;border-radius:26px;background:#0d1117;border:1px solid #30363d;overflow:hidden}
+.fw-map::before{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1.2px) 0 0/16px 16px;pointer-events:none}
+.fw-map>*{position:relative}
+.fw-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.fw-head b{font-size:15px;font-weight:850;color:#f0f6fc}
+.fw-head span{font-size:12px;color:#9198a1;border:1px solid #30363d;border-radius:99px;padding:3px 10px;background:#161b22}
+.fw-row{display:grid;gap:14px}
+.fw-data{grid-template-columns:repeat(4,minmax(0,1fr))}
+.fw-box{position:relative;padding:30px 14px 14px;border-radius:12px;text-align:center;color:#3a3326}
+.fw-box>canvas{position:absolute;left:50%;top:-25px;width:40px;height:40px;margin-left:-20px;image-rendering:pixelated;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.45))}
+.fw-en{display:block;font:700 15px/1.2 "Segoe UI",system-ui,sans-serif}
+.fw-who{display:block;margin-top:3px;font-size:12px;font-weight:800;opacity:.85}
+.fw-d{margin:8px 0 0;font-size:12.5px;line-height:1.55;font-weight:600;opacity:.82}
+.fw-data .fw-box{background:#fef7ea;border:1.5px solid #fddb9d}
+.fw-arrows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));height:40px}
+.fw-arrows i,.fw-down{position:relative;display:block}
+.fw-arrows i::before,.fw-down::before{content:"";position:absolute;left:50%;top:4px;bottom:6px;width:2px;margin-left:-1px;background:#8b949e}
+.fw-arrows i::after,.fw-down::after{content:"";position:absolute;left:50%;bottom:5px;width:8px;height:8px;margin-left:-4px;border-right:2px solid #8b949e;border-bottom:2px solid #8b949e;transform:rotate(45deg)}
+.fw-research{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;align-items:center;padding:36px 16px 36px;border-radius:14px;background:#fef1d8;border:2px solid #f9a90c}
+.fw-rlabel{position:absolute;left:0;right:0;bottom:0;height:22px;background:#f9a90c;color:#fff;font:700 12px/22px "Segoe UI",system-ui,sans-serif;text-align:center}
+.fw-bull{background:#eefadd;border:1.5px solid #9bd97a;color:#0f5a22}
+.fw-bull .fw-en{color:#19b33b}
+.fw-bear{background:#fbe3e1;border:1.5px solid #f2a09a;color:#6a1512}
+.fw-bear .fw-en{color:#f03e3e}
+.fw-disc{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;border-radius:99px;background:#fde9c4;border:1.5px solid #d9a441;color:#5a4214;font:600 12px/1.2 "Segoe UI",system-ui,sans-serif;white-space:nowrap}
+.fw-disc small{font:700 10.5px/1.3 "Pretendard Variable",sans-serif;opacity:.8}
+.fw-evid{display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;height:48px}
+.fw-evid span{font:600 11.5px/1 "Segoe UI",system-ui,sans-serif}
+.fw-evid .up{text-align:right;color:#3fd06a}
+.fw-evid .dn{color:#ff6b6b}
+.fw-evid .fw-down{height:100%}
+.fw-exec{grid-template-columns:minmax(0,1fr) 26px minmax(0,1.4fr) 26px minmax(0,1fr) 26px minmax(0,.9fr);gap:6px;align-items:stretch}
+.fw-right{position:relative;display:block;align-self:center;height:14px}
+.fw-right::before{content:"";position:absolute;left:3px;right:6px;top:50%;height:2px;margin-top:-1px;background:#8b949e}
+.fw-right::after{content:"";position:absolute;right:4px;top:50%;width:8px;height:8px;margin-top:-4px;border-top:2px solid #8b949e;border-right:2px solid #8b949e;transform:rotate(45deg)}
+.fw-trader{background:#efe9fb;border:1.5px solid #8b6cf0;color:#3b2a6e}
+.fw-risk{padding:0;background:#fff;border:1.5px solid #6f8fd8;color:#2b3a67;text-align:left}
+.fw-rhead{height:26px;border-radius:10px 10px 0 0;background:#dce4f4;color:#2b3a67;font:700 12px/26px "Segoe UI",system-ui,sans-serif;text-align:center}
+.fw-rb{display:grid;grid-template-columns:34px minmax(0,1fr);gap:9px;align-items:center;padding:8px 12px}
+.fw-rb canvas{width:34px;height:34px;image-rendering:pixelated;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.35))}
+.fw-rb b{display:flex;align-items:center;gap:6px;font:700 12.5px/1.25 "Segoe UI",system-ui,"Pretendard Variable",sans-serif}
+.fw-rb b i{width:10px;height:10px;border-radius:2px;flex:none}
+.fw-rb .fw-d{margin-top:2px;font-size:11.5px}
+.fw-manager{background:#dfe7fb;border:1.5px solid #5b7bd5;color:#1d2f6b}
+.fw-out{padding-top:16px;background:#5b8def;border:1.5px solid #5b8def;color:#fff;box-shadow:0 0 22px rgba(91,141,239,.45)}
+.fw-out svg{display:block;width:26px;height:26px;margin:0 auto 6px}
+.fw-extra{margin-top:26px;padding:14px 16px 8px;border-radius:14px;border:1.5px dashed #3d444d;background:rgba(22,27,34,.72)}
+.fw-xlabel{display:inline-block;margin-bottom:4px;font-size:12px;font-weight:850;color:#f2cc60}
+.fw-xrows{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+.fw-extra .fw-rb{padding:6px 0;color:#d1d7e0}
+.fw-extra .fw-rb b{color:#f0f6fc}
+.fw-extra .fw-d{opacity:.75}
+.fw-src{margin:16px 0 0;text-align:center;font-size:11px;color:#6e7681}
+
+/* 작동 원리 — 조직도가 단계마다 켜진다 */
+.org-stage{position:sticky;top:calc(var(--chrome-h) + 22px);height:min(640px,calc(100vh - var(--chrome-h) - 44px));display:flex;flex-direction:column;padding:22px;border-radius:30px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#131b2e 0%,#070a11 75%);border:1px solid var(--line);transition:top .5s var(--ease)}
+.org-dots{display:flex;gap:6px;flex-wrap:wrap}
+.org-dots span{height:26px;padding:0 10px;border-radius:99px;display:inline-flex;align-items:center;font-size:12px;font-weight:800;color:var(--faint);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);transition:all .4s var(--ease);white-space:nowrap}
+.org-stage[data-stage="1"] .org-dots span:nth-child(1),.org-stage[data-stage="2"] .org-dots span:nth-child(2),.org-stage[data-stage="3"] .org-dots span:nth-child(3),.org-stage[data-stage="4"] .org-dots span:nth-child(4),.org-stage[data-stage="5"] .org-dots span:nth-child(5){color:#1b1305;background:var(--gold);border-color:var(--gold)}
+/* 조직도는 한 줄씩 작게 — 남는 높이는 아래 예시 대화가 쓴다 */
+.org{flex:none;display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.grp{display:flex;align-items:center;gap:12px;padding:6px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);opacity:.3;transform:scale(.97);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .6s,background .6s}
+.grp>b{width:96px;flex:none;font-size:12.5px;font-weight:850;color:var(--text-2)}
+.grp.done{opacity:.62;transform:none}
+.grp.on{opacity:1;transform:none;border-color:rgba(247,201,72,.55);background:linear-gradient(90deg,rgba(247,201,72,.12),rgba(247,201,72,.02));box-shadow:0 0 40px -16px rgba(247,201,72,.6)}
+.ppl{display:flex;gap:4px 14px;flex-wrap:wrap}
+.ppl figure{margin:0;display:flex;align-items:center;gap:7px}
+.ppl canvas{width:30px;height:30px;image-rendering:pixelated}
+.motion .grp.on .ppl canvas{animation:hop 1.1s steps(2) infinite}
+@keyframes hop{50%{transform:translateY(-3px)}}
+.ppl figcaption{font:10px/1.25 "Galmuri11",monospace;color:var(--text-2)}
+.ppl figcaption small{display:block;color:var(--mute);font:10px/1.3 "Pretendard Variable",sans-serif}
+/* 예시 대화 — 실제 버전 리포트 원문을 직원들이 번갈아 타이핑하듯 (말하는 직원은 조직도에서 튀어 오른다) */
+.org-chat{position:relative;flex:1;min-height:170px;margin-top:12px;display:flex;flex-direction:column;border:2px solid #000;background:#0b0e16;box-shadow:4px 4px 0 #000;overflow:hidden}
+.oc-top{display:flex;align-items:center;gap:8px;padding:7px 11px;border-bottom:1px solid #1f2637;background:#101624;font:11px/1.3 "Galmuri11",monospace;color:#8b95ad;white-space:nowrap;overflow:hidden}
+.oc-top b{color:var(--gold);font-weight:normal}
+.oc-top .dot{width:7px;height:7px;flex:none;background:#e5243b;animation:ping 1.2s infinite}
+.oc-top small{overflow:hidden;text-overflow:ellipsis}
+/* 넘치면 스크롤 — 첫 줄 margin-top:auto로 평소엔 아래 정렬, 길어지면 위로 올려 읽을 수 있다 */
+.oc-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#2a3348 transparent;display:flex;flex-direction:column;gap:9px;padding:10px 11px 12px}
+.oc-body>:first-child{margin-top:auto}
+.oc-msg{display:grid;grid-template-columns:30px minmax(0,1fr);gap:9px;align-items:start;animation:ocIn .25s steps(3)}
+.oc-msg canvas{width:30px;height:30px;image-rendering:pixelated;background:#161c2b;border:1px solid #2a3348}
+.oc-who{display:block;font:10.5px/1.3 "Galmuri11",monospace;color:var(--cyan);margin-bottom:2px}
+.oc-who em{font-style:normal;color:#8b95ad}
+.oc-say{margin:0;font:12.5px/1.6 "Pretendard Variable",sans-serif;color:#e6eaf3;font-weight:650}
+.oc-more{margin:3px 0 0;font:11.5px/1.6 "Pretendard Variable",sans-serif;color:#9aa4ba}
+.oc-caret{display:inline-block;width:7px;height:12px;margin-left:2px;vertical-align:-1px;background:var(--gold);animation:ocBlink .8s steps(2) infinite}
+@keyframes ocIn{from{opacity:0;transform:translateY(6px)}}
+@keyframes ocBlink{50%{opacity:0}}
+.ppl figure.talking canvas{animation:hop .5s steps(2) infinite;filter:drop-shadow(0 0 6px rgba(247,201,72,.9))}
+.ppl figure.talking figcaption{color:var(--gold)}
+
+/* 직접 돌려 보기 — 페이지 가운데에 데모 버전을 그대로 끼워 넣는다 (머리말은 짧게, 화면을 크게) */
+#try{padding-top:72px}
+#try .sec-head{margin-bottom:24px}
+#try .sec-head h2{font-size:clamp(28px,3.2vw,40px)}
+.try-shell{border-radius:22px;padding:8px;background:linear-gradient(180deg,#1b2233,#0b0f19);border:1px solid var(--line-2);box-shadow:0 60px 140px -60px rgba(60,200,255,.35),0 40px 90px -40px #000}
+.try-bar{display:flex;align-items:center;gap:12px;height:34px;padding:0 8px 6px;font-size:12.5px;color:var(--mute);font-weight:700}
+.try-bar .dots{display:flex;gap:6px}.try-bar .dots i{width:10px;height:10px;border-radius:50%;background:#2a3246}
+.try-bar .dots i:first-child{background:#e5243b}.try-bar .dots i:nth-child(2){background:var(--gold)}.try-bar .dots i:nth-child(3){background:var(--long)}
+.try-url{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Galmuri11",monospace;letter-spacing:.02em}
+.try-left{flex:0 1 auto;min-width:0;height:24px;display:inline-block;line-height:22px;padding:0 10px;border-radius:8px;background:rgba(47,209,138,.12);border:1px solid rgba(47,209,138,.35);color:var(--long);font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.try-left[data-out="1"]{background:rgba(247,201,72,.1);border-color:rgba(247,201,72,.4);color:var(--gold)}
+.try-full{flex:none;color:var(--text-2);text-decoration:none;font-weight:800}
+.try-full:hover{color:var(--gold)}
+.try-screen{position:relative;height:clamp(600px,calc(100vh - var(--hdr) - var(--tick) - 150px),820px);border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#131b2e 0%,#05070c 75%)}
+.try-screen iframe{position:absolute;left:0;top:0;border:0;background:#000;transform-origin:0 0}
+.try-start{position:absolute;inset:0;margin:auto;width:min(360px,86%);height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:22px;border:1px solid rgba(247,201,72,.45);background:rgba(11,15,25,.86);color:var(--text);cursor:pointer;font:inherit;box-shadow:0 30px 80px -30px rgba(247,201,72,.45)}
+.try-start .i{width:44px;height:44px;padding:10px;border-radius:50%;background:var(--gold);color:#1b1305}
+.try-start b{font-size:18px;font-weight:850}
+.try-start small{font-size:13px;color:var(--mute);font-weight:650}
+.try-start:hover{border-color:var(--gold)}
+.try-screen.on .try-start{display:none}
+.try-note{margin:16px auto 0;max-width:820px;text-align:center;font-size:13.5px;color:var(--mute)}
+.try-note a{color:var(--gold)}
+.try-note b{display:block;margin-bottom:8px;color:var(--gold);font-size:clamp(17px,2.3vw,22px);line-height:1.4;font-weight:900;letter-spacing:-.01em}
+.try-note+.try-note{margin-top:6px;font-size:12.5px;color:var(--faint)}
+
+/* AI 실제 버전 */
+.real-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.feat{padding:24px 24px 26px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))}
+.feat .ic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;color:var(--gold);background:rgba(247,201,72,.1);border:1px solid rgba(247,201,72,.28)}
+.feat .ic .i{width:22px;height:22px}
+.feat h3{margin:0 0 8px;font-size:19px;letter-spacing:-.03em;font-weight:850}
+.feat p{margin:0;color:var(--text-2);font-size:15px}
+.quote{margin:22px 0 0;padding:26px 28px;border-radius:24px;border:1px solid rgba(60,200,255,.28);background:radial-gradient(520px 220px at 100% 0%,rgba(60,200,255,.09),transparent 70%),rgba(255,255,255,.015)}
+.quote figcaption{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:14px;color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:.04em}
+.quote figcaption small{color:var(--faint);font-weight:650;letter-spacing:0}
+.quote blockquote{margin:0 0 12px;padding:0 0 0 14px;border-left:2px solid rgba(60,200,255,.35);color:var(--text);font-size:15.5px;line-height:1.7}
+.quote blockquote b{display:block;font:11px/1.6 "Galmuri11",monospace;color:var(--cyan);letter-spacing:.04em}
+.quote p{margin:4px 0 0;color:var(--mute);font-size:13.5px}
+.real-cta{margin-top:26px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px 24px;padding:24px 28px;border-radius:24px;border:1px solid rgba(67,189,245,.35);background:linear-gradient(135deg,rgba(31,143,208,.14),rgba(12,15,22,.6) 60%)}
+.need{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.need b{margin-right:4px;font-size:14px;font-weight:850}
+.need span{height:30px;display:inline-flex;align-items:center;padding:0 12px;border-radius:99px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);font-size:13.5px;color:var(--text-2);font-weight:700}
+.apply-sec{padding:24px 0}
+.dl-auto small{display:block;margin-top:6px;font-size:12px;font-weight:600;color:var(--mute)}
+.dl-perk{margin:18px 0 0;padding:12px 16px;border-radius:14px;border:1px solid rgba(247,201,72,.35);background:rgba(247,201,72,.07);color:var(--text);font-size:15px;font-weight:700;line-height:1.55}
+/* 실전 챌린지 — 옆 배너와 같은 피드(rich.json)로 실시간 수익률·전적·보유 포지션 */
+.ap-copy{min-width:0;flex:1}
+.apply .ap-copy>p{max-width:640px}
+.apply .ap-where{margin-top:10px;font-size:14px;color:var(--mute)}
+.ap-live{margin-top:18px;max-width:640px;padding:14px 16px 12px;border-radius:16px;border:1px solid rgba(247,201,72,.3);background:rgba(6,8,13,.55)}
+.ap-live[hidden]{display:none}
+.ap-head{display:flex;align-items:center;gap:8px;font-size:13px}
+.ap-head b{font-weight:850;color:var(--gold)}
+.ap-head .dot{background:var(--long);animation:ping 1.8s infinite}
+.ap-head .live{margin-left:auto;font-size:10.5px;font-weight:850;letter-spacing:.1em;color:var(--long)}
+.ap-virt{font-size:11px;font-weight:700;color:var(--mute);padding:1px 7px;border-radius:6px;border:1px solid var(--line-2);white-space:nowrap}
+.ap-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;margin-top:10px}
+.ap-grid div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ap-grid span{font-size:11.5px;color:var(--mute);font-weight:700}
+.ap-grid b{font-size:17px;font-weight:880;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ap-spark svg{display:block;width:100%;height:34px;margin-top:10px;overflow:visible}
+.ap-note{display:block;margin-top:8px;font-size:11px;line-height:1.5;color:var(--faint)}
+
+@media (max-width:959px){
+  #framework{padding-top:64px}
+  .fw-top{grid-template-columns:1fr;gap:28px}
+  .fw-data,.fw-arrows{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fw-data{row-gap:38px}
+  .fw-arrows i:nth-child(n+3){display:none}
+  .fw-research{grid-template-columns:1fr;row-gap:36px;padding-top:40px}
+  .fw-disc{justify-self:center;margin:0 0 4px}
+  .fw-exec{grid-template-columns:1fr;gap:0}
+  .fw-exec .fw-right{height:44px;align-self:stretch}
+  .fw-exec .fw-right::before{left:50%;right:auto;top:4px;bottom:8px;width:2px;height:auto;margin:0 0 0 -1px}
+  .fw-exec .fw-right::after{left:50%;right:auto;top:auto;bottom:6px;margin:0 0 0 -4px;border:0;border-right:2px solid #8b949e;border-bottom:2px solid #8b949e}
+  .fw-exec .fw-trader,.fw-exec .fw-manager{margin-top:18px}
+  .fw-xrows{grid-template-columns:1fr}
+  .hero{padding-top:28px}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .office .monitor{padding:5px;border-radius:14px}
+  .office-screen{border-radius:9px}
+  .org-stage{top:calc(var(--chrome-h) + 10px);height:auto;z-index:3;padding:14px;box-shadow:0 14px 22px -10px var(--bg),0 -40px 0 0 var(--bg)}
+  /* 휴대폰: 지금 단계 팀만 한 줄 + 대화 — 고정된 조직도가 화면을 덮지 않게 */
+  .grp:not(.on){display:none}
+  .grp{padding:6px 10px;gap:10px}
+  .grp>b{width:70px;font-size:12px}
+  .ppl{gap:4px 10px}
+  .ppl canvas{width:26px;height:26px}
+  .ppl figcaption small{display:none}
+  .org-chat{flex:none;min-height:0;height:172px;margin-top:8px}
+  .oc-top small,.oc-more{display:none}
+  .oc-msg{grid-template-columns:24px minmax(0,1fr);gap:7px}
+  .oc-msg canvas{width:24px;height:24px}
+  .oc-say{font-size:11.5px;line-height:1.5}
+  .real-grid{grid-template-columns:1fr 1fr}
+  .try-screen{height:min(640px,calc(100svh - 190px));min-height:520px}
+  .try-shell{padding:6px;border-radius:18px}
+}
+@media (max-width:639px){
+  .gh{padding:16px}
+  .gh-big{gap:10px}
+  .gh-big svg{width:44px;height:44px}
+  .fw-map{padding:20px 14px 16px;border-radius:20px}
+  .fw-head{margin-bottom:34px}
+  .fw-box:not(.fw-risk){padding:28px 10px 12px}
+  .fw-d{font-size:12px}
+  .real-grid{grid-template-columns:1fr}
+  .feat{padding:20px}
+  .quote{padding:20px 18px}
+  .real-cta{padding:20px 18px}
+  .real-cta .btn{width:100%}
+  .ap-grid{grid-template-columns:1fr 1fr}
+  .ap-grid b{white-space:normal;font-size:16px}
+  .sub-card{padding:12px 14px}
+  .try-bar .dots,.try-url{display:none}
+  .try-bar{justify-content:space-between}
+}
+/* 리퀴드 글래스(liquid-glass.js, rdev/liquid-glass-react MIT 방식) — 굴절은 .lq-warp, 테두리 빛은 .lq-edge.
+   유리 뒤가 비쳐야 하므로 카드 배경은 반투명으로, 호스트 자신의 backdrop-filter는 끈다(겹치면 backdrop root가 생겨 뒤가 안 비친다) */
+.lq{position:relative;isolation:isolate}
+.lq-warp{position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none}
+.lq-svg{position:absolute;left:0;top:0;pointer-events:none}
+.lq-edge{position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;padding:1.5px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;box-shadow:0 0 0 .5px rgba(255,255,255,.5) inset,0 1px 3px rgba(255,255,255,.25) inset,0 1px 4px rgba(0,0,0,.35)}
+.lq-edge-a{mix-blend-mode:screen;opacity:.2;background:linear-gradient(var(--lq-ang,135deg),rgba(255,255,255,0) 0%,rgba(255,255,255,var(--lq-a1,.12)) var(--lq-s1,33%),rgba(255,255,255,var(--lq-a2,.4)) var(--lq-s2,66%),rgba(255,255,255,0) 100%)}
+.lq-edge-b{mix-blend-mode:overlay;background:linear-gradient(var(--lq-ang,135deg),rgba(255,255,255,0) 0%,rgba(255,255,255,var(--lq-b1,.32)) var(--lq-s1,33%),rgba(255,255,255,var(--lq-b2,.6)) var(--lq-s2,66%),rgba(255,255,255,0) 100%)}
+.lq-on .rail-card{background:linear-gradient(180deg,rgba(24,33,54,.5),rgba(8,11,19,.62));border-color:rgba(255,255,255,.1);box-shadow:0 30px 80px -30px #000,0 12px 40px rgba(0,0,0,.25);text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.lq-on .rail-l .rail-card{border-color:rgba(247,201,72,.3)}
+.lq-on .chip,.lq-on .dock .pill{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(14,20,34,.55);box-shadow:0 12px 30px -10px rgba(0,0,0,.7);text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.lq-on .btn.ghost{background:rgba(255,255,255,.05)}
+html:not(.motion) .grp.on .ppl canvas,html:not(.motion) .office-cap .dot,html:not(.motion) .ppl figure.talking canvas,html:not(.motion) .oc-caret,html:not(.motion) .oc-msg,html:not(.motion) .ap-head .dot,html:not(.motion) .oc-top .dot{animation:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6.5 5 13 2.5-6.5h4"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 4 3 11.2l6.6 2.3M21 4l-3.8 16-7.6-6.5M21 4 9.6 13.5v5.8l3.1-3.2"/></symbol>
+<symbol id="i-news" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M7 9.2h5M7 12.5h10M7 15.8h10"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.7l2.2 2.2h7.1A2.5 2.5 0 0 1 21 9.7v7.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-team" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><circle cx="5.5" cy="10" r="2.3"/><circle cx="18.5" cy="10" r="2.3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0M2 19a3.6 3.6 0 0 1 4.6-3.4M22 19a3.6 3.6 0 0 0-4.6-3.4"/></symbol>
+<symbol id="i-debate" viewBox="0 0 24 24"><path d="M4 5h10a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M18 9h2a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1v3l-4-3h-3"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H12L11 22l8.5-11.5H12z"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8.5L19 7.5V21H6z"/><path d="M14 3v5h5M9 12h7M9 15.5h7M9 19h4"/></symbol>
+</defs></svg>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<aside class="rail rail-l" id="richRail" hidden aria-label="트레이딩 룸 실전 현황">
+  <div class="rail-card">
+    <div class="rail-head"><span class="dot"></span><b id="rTitle">트레이딩 룸</b><span class="live">LIVE</span><button class="rail-x" type="button" data-close aria-label="닫기">×</button></div>
+    <div class="rail-body" style="position:relative">
+      <div class="rt-total"><span class="lbl" id="rTotLbl">방 합산 잔고</span><div class="rt-eq"><span id="rTotEq">–</span><small>USDT</small></div>
+        <div class="rt-sub"><span class="roi" id="rTotRoi">–</span><span id="rTotStart"></span></div></div>
+      <span class="gain" id="rGain"></span>
+      <div class="rt-rooms" id="rRooms"></div>
+      <div class="rt-recent" id="mTradesBox" hidden><span class="lbl">매매 내역 · 영상 속 챌린지</span><ul id="mTrades"></ul></div>
+      <div class="rt-recent"><span class="lbl">신호방 최근 익절 · 잔고·승패는 손절 포함</span><ul id="rRecent"></ul></div>
+    </div>
+    <div class="rail-foot"><a class="btn gold rail-cta" id="rApply" href="https://pf.kakao.com/_ICyin/chat" target="_blank" rel="noopener">챌린지 신청하기<svg class="i"><use href="#i-arrow"/></svg></a>
+      <p class="rail-note" id="rNote"></p></div>
+  </div>
+</aside>
+<aside class="rail rail-r" id="chatRail" hidden aria-label="커뮤니티 소통방">
+  <div class="rail-card" style="max-height:inherit">
+    <div class="rail-head"><span class="dot"></span><b id="cTitle">커뮤니티 소통방</b><span class="live">LIVE</span><button class="rail-x" type="button" data-close aria-label="닫기">×</button></div>
+    <div class="rail-body" id="cBody"><ul class="chat" id="cList"></ul></div>
+    <div class="rail-foot"><a class="btn tg rail-cta" id="cJoin" href="https://t.me/+lSc9tuwXMaNmNDE1" target="_blank" rel="noopener"><svg class="i"><use href="#i-send"/></svg>소통방 입장하기</a>
+      <p class="rail-note">닉네임은 첫 글자만 보이고, 링크·연락처는 가려서 보여 줍니다.</p></div>
+  </div>
+</aside>
+<div class="dock" id="dock" hidden>
+  <button class="pill rich" type="button" id="dRich" data-open="richRail" hidden><span class="dot" style="background:var(--gold)"></span><span id="dRichName">실전 현황</span><b id="dRoi">–</b></button>
+  <button class="pill" type="button" id="dChat" data-open="chatRail" hidden><svg class="i"><use href="#i-send"/></svg><span id="dChatName">소통방</span></button>
+</div>
+
+<div class="chrome" id="chrome">
+  <header class="top"><div class="wrap">
+    <a class="logo" href="#top"><span class="mark"><canvas data-agent="ace" width="16" height="16" aria-hidden="true"></canvas></span><span class="logo-t pixel">PIXEL TRADING FLOOR</span></a>
+    <nav class="main" aria-label="주요 메뉴"><a href="#framework">TradingAgents</a><a href="#how">작동 원리</a><a href="#try">직접 돌려 보기</a><a href="#real">AI 실제 버전</a><a href="#get">자료실</a><a href="#faq">FAQ</a></nav>
+    <a class="btn gold sm top-cta" href="#try"><svg class="i"><use href="#i-play"/></svg>데모 버전</a>
+  </div></header>
+  <div class="ticker" aria-label="실시간 시세">
+    <div class="tk-in">
+      <a class="tk-fixed" href="#try" data-live="live"><span class="dot"></span><span class="st">LIVE 데모 버전</span><span class="tk-note">AI 기능 없음</span></a>
+      <div class="tk-scroll"><div class="tk-track" id="tkTrack"><div class="tk-set">
+        <a class="tk-item tk-rich" href="#apply" data-tk-rich hidden><span class="dot"></span><span data-rich-name>RICH 챌린지</span> <b data-rich-roi>–</b><em data-rich-wl></em><small class="tk-virt" data-rich-tag>가상 계좌</small></a>
+        <span class="tk-item">BTC <b data-tk="BTC">–</b><em data-tkp="BTC"></em></span>
+        <span class="tk-item">ETH <b data-tk="ETH">–</b><em data-tkp="ETH"></em></span>
+        <span class="tk-item">SOL <b data-tk="SOL">–</b><em data-tkp="SOL"></em></span>
+        <span class="tk-item">테슬라 <b data-tk="TSLA">–</b><em data-tkp="TSLA"></em></span>
+        <span class="tk-item">엔비디아 <b data-tk="NVDA">–</b><em data-tkp="NVDA"></em></span>
+        <span class="tk-item">애플 <b data-tk="AAPL">–</b><em data-tkp="AAPL"></em></span>
+        <span class="tk-item">삼성전자 <b data-tk="SAMSUNG">–</b><em data-tkp="SAMSUNG"></em></span>
+        <span class="tk-item">SK하이닉스 <b data-tk="SKHYNIX">–</b><em data-tkp="SKHYNIX"></em></span>
+        <span class="tk-item">금 <b data-tk="XAU">–</b><em data-tkp="XAU"></em></span>
+        <span class="tk-item">XRP <b data-tk="XRP">–</b><em data-tkp="XRP"></em></span>
+        <span class="tk-item">DOGE <b data-tk="DOGE">–</b><em data-tkp="DOGE"></em></span>
+      </div></div></div>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+<section class="hero" aria-label="소개"><div class="wrap hero-grid">
+  <div class="hero-copy">
+    <span class="chip" data-hero><span class="dot" style="background:var(--long)"></span><span class="st pixel">AI TRADING OFFICE</span><span class="sep"></span><span>직원 13명 · 코인·주식</span></span>
+    <h1><span class="ln"><span>AI 직원 13명이</span></span><span class="ln"><span><em>토론하고 판정하는</em></span></span><span class="ln"><span>트레이딩 오피스</span></span></h1>
+    <p class="lead" data-hero>애널리스트 네 명이 차트·수급·뉴스·심리를 나눠 보고, 매수파와 매도파가 토론하고, 리스크 위원회와 PM이 결재해야 판정이 나옵니다. 아래에서 바로 한 번 맡겨 보세요 — 진입가·목표가·손절가를 차트에 그려 드립니다.</p>
+    <div class="btns" data-hero>
+      <a class="btn gold lg" href="#try"><svg class="i"><use href="#i-play"/></svg>데모 버전</a>
+      <a class="btn ghost lg" href="#real"><svg class="i"><use href="#i-folder"/></svg>AI 실제 버전 보기</a>
+    </div>
+    <ul class="trust" data-hero>
+      <li><svg class="i"><use href="#i-check"/></svg>데모 버전은 설치 없이 페이지에서 바로</li>
+      <li><svg class="i"><use href="#i-check"/></svg>횟수 제한 없이 마음껏 · 모의 잔고 10,000 USDT</li>
+      <li><svg class="i"><use href="#i-check"/></svg>코인 · 미국 주식 · 삼성전자 · 금</li>
+    </ul>
+    <a class="sub-card" href="#real" data-hero>
+      <b>Claude·ChatGPT 구독 중이신가요?</b>
+      <span>AI 실제 버전은 자료실에서 무료로 받아 Windows PC에 설치하면, 이미 쓰고 있는 Claude 또는 ChatGPT(Codex) 요금제로 추가 비용 없이 AI 직원 13명의 분석이 바로 켜집니다.</span>
+      <small>Claude Pro·Max 또는 ChatGPT 유료 요금제(Codex) 기준 · 요금제별 사용량 한도는 그대로 적용</small>
+    </a>
+  </div>
+  <div class="office-wrap"><div class="office" data-hero>
+    <a class="monitor" href="#try" aria-label="직접 돌려 보기로 이동"><div class="screen office-screen" id="officeScreen"><img src="img/office-pc.png" alt="트레이딩 오피스 — 직원들이 BTC를 분석하는 화면" width="1440" height="900"><span class="live-badge"><i></i>LIVE</span></div></a>
+    <p class="office-cap"><span class="dot"></span><span id="officeCapText">데모 버전 화면 — PC에서는 여기서 90초마다 BTC를 분석하는 모습을 볼 수 있어요</span><small>*실시간 뉴스 분석과 AI 기능이 빠진 데모 버전입니다 (AI 엔진 대신 자체 트레이딩 로직)</small></p>
+  </div></div>
+</div></section>
+
+<section id="framework"><div class="wrap">
+  <div class="fw-top">
+    <div class="fw-copy" data-rise>
+      <span class="eyebrow">TradingAgents 프레임워크</span>
+      <h2>깃허브 스타 <em>10만 개</em>를 넘긴<br>오픈소스 논문 프레임워크를 적용했습니다</h2>
+      <p class="sub">Tauric Research가 공개한 논문 「TradingAgents: Multi-Agents LLM Financial Trading Framework」의 투자 회사 구조 — 애널리스트 팀 → 리서처 토론 → 트레이더 → 리스크 관리 팀 → 매니저 — 를 그대로 가져와, 픽셀 사무실의 AI 직원 13명이 역할을 나눠 맡습니다.</p>
+      <ul class="fw-facts"><li>논문 arXiv 2412.20138</li><li>오픈소스 Apache-2.0</li><li>깃허브 포크 2만+</li></ul>
+      <div class="fw-links">
+        <a class="btn ghost sm" href="https://github.com/TauricResearch/TradingAgents" target="_blank" rel="noopener">깃허브 저장소<svg class="i"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost sm" href="https://arxiv.org/abs/2412.20138" target="_blank" rel="noopener">논문 보기 (arXiv)<svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+      <p class="fw-note">PIXEL TRADING FLOOR는 공개된 논문과 오픈소스 구조를 바탕으로 따로 만든 프로그램이며, Tauric Research와 제휴 관계가 없습니다.</p>
+    </div>
+    <a class="gh" id="ghCard" href="https://github.com/TauricResearch/TradingAgents" target="_blank" rel="noopener" aria-label="깃허브 TauricResearch/TradingAgents 저장소 (새 창)" data-rise
+       data-stars="109376" data-forks="21001" data-watch="825" data-asof="2026-10-01">
+      <div class="gh-path"><b>GitHub</b> / TauricResearch / <b>TradingAgents</b></div>
+      <div class="gh-card">
+        <div class="gh-title"><svg viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4" aria-hidden="true"><path d="M3 2.5h8.5a1 1 0 0 1 1 1V13H4.2A1.2 1.2 0 0 0 3 14.2z"/><path d="M3 14.2V3.5a1 1 0 0 1 1-1M5.5 5.5h4"/></svg><b>TradingAgents</b><span class="gh-pub">Public</span></div>
+        <p class="gh-desc">Multi-Agents LLM Financial Trading Framework</p>
+        <div class="gh-tags"><span>agent</span><span>finance</span><span>llm</span><span>multiagent</span><span>trading</span></div>
+        <div class="gh-btns">
+          <span class="gh-btn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8s2.6-5 7-5 7 5 7 5-2.6 5-7 5-7-5-7-5z" fill="none" stroke="#9198a1" stroke-width="1.4"/><circle cx="8" cy="8" r="2" fill="#9198a1"/></svg>Watch<i id="ghWatch">825</i></span>
+          <span class="gh-btn"><svg viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4" aria-hidden="true"><circle cx="4" cy="3" r="1.6"/><circle cx="12" cy="3" r="1.6"/><circle cx="8" cy="13" r="1.6"/><path d="M4 4.6v1.2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4.6M8 7.8v3.6"/></svg>Fork<i id="ghForks">21k</i></span>
+          <span class="gh-btn hot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2l2.95 6.3 6.85.75-5.1 4.65 1.43 6.75L12 17.2l-6.13 3.45 1.43-6.75-5.1-4.65 6.85-.75z" fill="#e3b341"/></svg>Starred<i id="ghStarBtn">109k</i></span>
+        </div>
+      </div>
+      <div class="gh-big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2l2.95 6.3 6.85.75-5.1 4.65 1.43 6.75L12 17.2l-6.13 3.45 1.43-6.75-5.1-4.65 6.85-.75z" fill="#e3b341"/></svg><span class="gh-num" id="ghStars">109.4k</span></div>
+      <div class="gh-lbl"><span>GitHub Stars</span><b id="ghMilestone">★ 10만 개 돌파</b></div>
+      <p class="gh-src">출처: github.com/TauricResearch/TradingAgents · 스타 수 <span id="ghAsOf">2026-10-01 기준</span></p>
+    </a>
+  </div>
+
+  <div class="fw-map" data-rise>
+    <div class="fw-head"><b>논문 도식 위에 앉은 PIXEL 직원 13명</b><span>arXiv 2412.20138 · 논문 기반 멀티 에이전트 프레임워크</span></div>
+    <div class="fw-row fw-data">
+      <div class="fw-box"><canvas data-agent="taro" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">Market</b><span class="fw-who">TARO · 기술적 분석</span><p class="fw-d">캔들·이동평균·RSI·MACD로 추세와 지지·저항을 읽습니다. 단타는 실제로 체결되는 무기한 차트 기준.</p></div>
+      <div class="fw-box"><canvas data-agent="vibe" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">Sentiment</b><span class="fw-who">VIBE · 센티먼트</span><p class="fw-d">공포탐욕지수·펀딩비 같은 심리 지표와 뉴스 제목의 여론으로 군중의 쏠림을 봅니다.</p></div>
+      <div class="fw-box"><canvas data-agent="nova" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">News</b><span class="fw-who">NOVA · 뉴스 분석</span><p class="fw-d">최신 뉴스 헤드라인을 읽고 호재·악재가 가격에 미칠 영향을 판단합니다.</p></div>
+      <div class="fw-box"><canvas data-agent="diana" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">Fundamentals</b><span class="fw-who">DIANA · 기본적 분석</span><p class="fw-d">시가총액·가격 위치·밸류에이션 같은 기본적 데이터로 지금 가격이 싼지 비싼지 따집니다.</p></div>
+    </div>
+    <div class="fw-arrows" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="fw-research">
+      <div class="fw-box fw-bull"><canvas data-agent="bull" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">↗ Bullish</b><span class="fw-who">BULL · 매수 논거</span><p class="fw-d">살 이유를 모아 가장 강한 매수 논거를 세우고 BEAR의 반론을 되받아칩니다.</p></div>
+      <div class="fw-disc">⇆ Discussion<small>2라운드 4턴 토론</small></div>
+      <div class="fw-box fw-bear"><canvas data-agent="bear" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">↘ Bearish</b><span class="fw-who">BEAR · 매도 논거</span><p class="fw-d">팔 이유를 모아 가장 강한 매도 논거를 세우고 BULL의 근거를 하나씩 반박합니다.</p></div>
+      <span class="fw-rlabel">Researcher Team</span>
+    </div>
+    <div class="fw-evid" aria-hidden="true"><span class="up">Buy Evidence</span><i class="fw-down"></i><span class="dn">Sell Evidence</span></div>
+    <div class="fw-row fw-exec">
+      <div class="fw-box fw-trader"><canvas data-agent="ace" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">Trader</b><span class="fw-who">ACE · 수석 트레이더</span><p class="fw-d">모든 분석과 토론을 종합해 방향·확신도·진입가·손절가·목표가를 정합니다.</p></div>
+      <i class="fw-right" aria-hidden="true"></i>
+      <div class="fw-box fw-risk"><div class="fw-rhead">Risk Management Team</div>
+        <div class="fw-rb"><canvas data-agent="risky" width="48" height="48" aria-hidden="true"></canvas><div><b><i style="background:#f7a534"></i>Aggressive · RISKY</b><p class="fw-d">기회를 놓치는 비용을 먼저 보고 공격적인 대안을 냅니다.</p></div></div>
+        <div class="fw-rb"><canvas data-agent="neutral" width="48" height="48" aria-hidden="true"></canvas><div><b><i style="background:#9aa0a6"></i>Neutral · NEUTRAL</b><p class="fw-d">두 주장을 인용해 어디까지 맞는지 가리고 절충안을 냅니다.</p></div></div>
+        <div class="fw-rb"><canvas data-agent="safe" width="48" height="48" aria-hidden="true"></canvas><div><b><i style="background:#4aa3f0"></i>Conservative · SAFE</b><p class="fw-d">자본 보존과 최악의 경우(꼬리위험)를 먼저 봅니다.</p></div></div>
+      </div>
+      <i class="fw-right" aria-hidden="true"></i>
+      <div class="fw-box fw-manager"><canvas data-agent="pm" width="48" height="48" aria-hidden="true"></canvas><b class="fw-en">Manager</b><span class="fw-who">PM · 포트폴리오 매니저</span><p class="fw-d">리스크 위원회 의견을 모아 계획을 승인·수정(비중 조정)·기각합니다.</p></div>
+      <i class="fw-right" aria-hidden="true"></i>
+      <div class="fw-box fw-out"><svg aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.8"><use href="#i-doc"/></svg><b class="fw-en">Report</b><span class="fw-who">판정 리포트</span><p class="fw-d">판정과 이유가 리포트 파일로 남고 모의 계좌에 기록됩니다.</p></div>
+    </div>
+    <div class="fw-extra">
+      <span class="fw-xlabel">PIXEL 추가 · 스캘핑 데스크 (논문에 없는 직원)</span>
+      <div class="fw-xrows">
+        <div class="fw-rb"><canvas data-agent="blitz" width="48" height="48" aria-hidden="true"></canvas><div><b>BLITZ · 스캘퍼</b><p class="fw-d">스캘핑 모드에서 몇 시간 안의 단타 자리 — 진입가·손절가·목표가 — 를 잡습니다.</p></div></div>
+        <div class="fw-rb"><canvas data-agent="guard" width="48" height="48" aria-hidden="true"></canvas><div><b>GUARD · 청산 계산</b><p class="fw-d">레버리지 청산가를 먼저 계산해, 손절보다 청산이 먼저 오는 계획을 걸러냅니다.</p></div></div>
+      </div>
+    </div>
+    <p class="fw-src">출처: github.com/TauricResearch/TradingAgents · arXiv 2412.20138 논문 도식을 참고해 다시 그렸습니다</p>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">작동 원리</span><h2>숫자가 아닌 시장을 읽는 AI 감성 분석</h2><p class="sub">위 구조대로 판정 하나가 다섯 단계 결재를 거칩니다. 스크롤하면 단계마다 담당 직원이 켜지고, 실제 버전 리포트 원문이 흘러갑니다.</p></div>
+  <div class="how">
+    <div class="org-stage" id="orgStage" data-stage="1">
+      <div class="org-dots"><span>애널리스트</span><span>토론</span><span>ACE</span><span>리스크</span><span>PM</span></div>
+      <div class="org">
+        <div class="grp" data-grp="1"><b>애널리스트 팀</b><div class="ppl">
+          <figure><canvas data-agent="taro" width="48" height="48"></canvas><figcaption>TARO<small>차트</small></figcaption></figure>
+          <figure><canvas data-agent="diana" width="48" height="48"></canvas><figcaption>DIANA<small>수급</small></figcaption></figure>
+          <figure><canvas data-agent="nova" width="48" height="48"></canvas><figcaption>NOVA<small>뉴스</small></figcaption></figure>
+          <figure><canvas data-agent="vibe" width="48" height="48"></canvas><figcaption>VIBE<small>심리</small></figcaption></figure>
+        </div></div>
+        <div class="grp" data-grp="2"><b>리서치 토론</b><div class="ppl">
+          <figure><canvas data-agent="bull" width="48" height="48"></canvas><figcaption>BULL<small>매수 논거</small></figcaption></figure>
+          <figure><canvas data-agent="bear" width="48" height="48"></canvas><figcaption>BEAR<small>매도 논거</small></figcaption></figure>
+        </div></div>
+        <div class="grp" data-grp="3"><b>수석 트레이더</b><div class="ppl">
+          <figure><canvas data-agent="ace" width="48" height="48"></canvas><figcaption>ACE<small>판정</small></figcaption></figure>
+          <figure><canvas data-agent="blitz" width="48" height="48"></canvas><figcaption>BLITZ<small>스캘핑</small></figcaption></figure>
+          <figure><canvas data-agent="guard" width="48" height="48"></canvas><figcaption>GUARD<small>청산 계산</small></figcaption></figure>
+        </div></div>
+        <div class="grp" data-grp="4"><b>리스크 위원회</b><div class="ppl">
+          <figure><canvas data-agent="risky" width="48" height="48"></canvas><figcaption>RISKY<small>공격</small></figcaption></figure>
+          <figure><canvas data-agent="safe" width="48" height="48"></canvas><figcaption>SAFE<small>보수</small></figcaption></figure>
+          <figure><canvas data-agent="neutral" width="48" height="48"></canvas><figcaption>NEUTRAL<small>중립</small></figcaption></figure>
+        </div></div>
+        <div class="grp" data-grp="5"><b>포트폴리오 매니저</b><div class="ppl">
+          <figure><canvas data-agent="pm" width="48" height="48"></canvas><figcaption>PM<small>최종 승인</small></figcaption></figure>
+        </div></div>
+      </div>
+      <div class="org-chat" id="orgChat">
+        <div class="oc-top"><span class="dot"></span><b>실제 버전 리포트 원문</b><small id="ocSrc"></small></div>
+        <div class="oc-body" id="ocBody"></div>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="n">01 · 애널리스트 팀</span>
+        <h3>네 명이 시장을 나눠 봅니다</h3>
+        <p>TARO는 차트, DIANA는 수급(미결제약정), NOVA는 뉴스, VIBE는 군중 심리. 같은 시각의 데이터를 각자 전문 분야로 읽고 브리핑을 올립니다.</p>
+        <span class="live"><span class="dot"></span>실제 버전에서는 네 명이 각자 AI(Claude·ChatGPT)로 분석합니다</span>
+      </li>
+      <li class="step">
+        <span class="n">02 · 리서치 토론</span>
+        <h3>매수파와 매도파가 4턴 토론</h3>
+        <p>BULL은 살 이유를, BEAR는 팔 이유를 찾아 두 라운드에 걸쳐 서로 반박합니다. 한쪽 근거만 보고 들어가는 실수를 막는 장치예요.</p>
+      </li>
+      <li class="step">
+        <span class="n">03 · 수석 트레이더</span>
+        <h3>ACE가 방향·확신도·레벨을 정합니다</h3>
+        <p>토론을 들은 ACE가 롱·숏·관망과 확신도, 진입가·손절가·목표가를 냅니다. 스캘핑 모드에서는 BLITZ가 단타 자리를 잡고 GUARD가 레버리지 청산가를 먼저 계산합니다.</p>
+      </li>
+      <li class="step">
+        <span class="n">04 · 리스크 위원회</span>
+        <h3>공격·보수·중립 세 명이 심사</h3>
+        <p>RISKY는 기회를, SAFE는 청산까지 거리와 반대 근거를, NEUTRAL은 둘을 종합합니다. 손절보다 청산가가 먼저 오는 계획은 여기서 걸러집니다.</p>
+      </li>
+      <li class="step">
+        <span class="n">05 · PM 최종 승인</span>
+        <h3>승인 · 비중 축소 · 기각</h3>
+        <p>PM이 최종 결재합니다. 승인된 판정은 모의 계좌에 포지션으로 기록되고, 실시간 시세로 익절·손절·청산까지 정산됩니다. 데모 버전에서는 실제 주문이 나가지 않습니다.</p>
+      </li>
+    </ol>
+  </div>
+</div></section>
+
+<section id="try"><div class="wrap">
+  <div class="sec-head center"><span class="eyebrow">직접 돌려 보기</span><h2>종목을 넣고 ▶ ANALYZE</h2><p class="sub">비트코인은 물론 테슬라·엔비디아 같은 미국 주식, 삼성전자·SK하이닉스, 금까지 넣어 보세요. 직원들이 매수·매도를 판정하면 차트에 진입가·목표가·손절가가 그려지고, 모의 잔고 10,000 USDT로 실시간 손익이 움직입니다.</p></div>
+  <div class="try-shell" data-rise>
+    <div class="try-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="try-url">PIXEL TRADING FLOOR · 데모 버전 · 실시간 뉴스 분석·AI 기능 없음</span><a class="try-full" href="app/" target="_blank" rel="noopener">크게 열기 ↗</a></div>
+    <div class="try-screen" id="tryScreen">
+      <button class="try-start" id="tryStart" type="button"><svg class="i"><use href="#i-play"/></svg><b>여기를 눌러 시작</b><small>BTC · 테슬라 · 삼성전자 · 금 … 횟수 제한 없이 마음껏</small></button>
+    </div>
+  </div>
+  <p class="try-note"><b>실시간 뉴스 분석과 AI 기능이 빠진 데모 버전입니다</b>AI 엔진 대신 자체 트레이딩 로직으로 판정해요. 실제 버전은 AI 직원 13명이 실시간 뉴스까지 읽고 토론하는 훨씬 더 강력한 분석 성능과 자동 운영·급변동 감시·리플레이·성적표·멀티 거래소 전광판 같은 추가 도구를 지원하며, <a href="#get">하단 자료실</a>에서 받을 수 있어요.</p>
+  <p class="try-note">체험이 빨리 끝나도록 100배 고정·수수료 없이 계산합니다. 100배는 가격이 약 0.5%만 반대로 가도 증거금 전액이 청산되는 배율이라 실제 매매라면 매우 위험합니다.</p>
+</div></section>
+
+<section id="real"><div class="wrap">
+  <div class="sec-head center"><span class="eyebrow">AI 실제 버전</span><h2>진짜 AI 직원 13명이 일하는 사무실</h2><p class="sub">실제 버전은 직원 13명이 각자 AI로 시장을 읽고, 서로 반박하고, 결재까지 합니다. Claude Pro·Max나 ChatGPT(Codex) 유료 요금제를 구독 중이라면 추가 비용 없이 본인 요금제로 바로 AI 분석이 켜져요. PC에 설치해 쓰는 프로그램이라 하단 텔레그램 자료실에서 무료로 받을 수 있습니다.</p></div>
+  <div class="real-grid">
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-team"/></svg></div><h3>13명이 각자 AI로 생각합니다</h3><p>TARO는 차트, DIANA는 수급, NOVA는 뉴스, VIBE는 심리. 같은 시각의 데이터를 각자 전문 분야로 읽고 브리핑을 씁니다.</p></article>
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-news"/></svg></div><h3>뉴스까지 읽고 판단합니다</h3><p>NOVA가 실시간 뉴스 헤드라인을 읽고 호재·악재를 판정에 넣습니다. 숫자만 보는 규칙으로는 못 하는 일입니다.</p></article>
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-debate"/></svg></div><h3>토론하고 결재합니다</h3><p>BULL과 BEAR가 서로 반박하고, 리스크 위원회 세 명과 PM이 결재해야 판정이 나옵니다. 판정마다 이유가 문장으로 남습니다.</p></article>
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-globe"/></svg></div><h3>멀티 거래소 전광판</h3><p>SK하이닉스·삼성전자는 KRX 원화 정규장과 USDT 무기한 선물을 함께 봅니다. 환율·거래소별 선물 가격·괴리·해외 상장까지 한 화면에 모아 24시간 차트 기준으로 판단합니다.</p></article>
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-bolt"/></svg></div><h3>스스로 일하고, 자동매매까지</h3><p>정해 둔 주기마다 알아서 분석하고, 대표실에 보고하고, 급변동은 감시해서 텔레그램으로 알려 줍니다. 거래소 API를 연동하면 실제 거래소 자동매매로도 이어갈 수 있습니다.</p></article>
+    <article class="feat" data-rise><div class="ic"><svg class="i"><use href="#i-doc"/></svg></div><h3>기록이 남는 사무실</h3><p>분석마다 리포트 파일이 남고, 성적표·리플레이·판정 카드로 다시 볼 수 있습니다. 내 PC에서만 돌고 밖으로 보내지 않습니다.</p></article>
+  </div>
+  <figure class="quote" data-rise>
+    <figcaption><span>실제 버전 리포트 발췌</span><small>2026-09-30 00:36 KST · BTC · 애널리스트 브리핑 중 일부 (원문 그대로)</small></figcaption>
+    <blockquote><b>TARO · 차트</b>BTC는 SMA20·50 위의 상승 추세지만 MACD 히스토그램이 음수로 모멘텀은 둔화 중입니다. 83,000~84,000 조정 구간이며 82,563 이탈 여부가 관건입니다.</blockquote>
+    <blockquote><b>VIBE · 심리·뉴스</b>ETF로 돈이 쏟아지는데도 8만 3,000달러 부근에서 '털썩' 주저앉았다는 헤드라인과 24시간 +0.13%의 정체는, 유입 대비 가격 반응이 약하다는 뜻이라 매수세가 소화되지 못하거나 상단에서 매물이 나오고 있을 가능성을 시사합니다.</blockquote>
+    <p>직원마다 이런 브리핑을 세 문단 안팎으로 쓰고, 토론·리스크 심사·최종 판정까지 한 편의 리포트로 남깁니다.</p>
+  </figure>
+  <div class="real-cta" data-rise>
+    <div class="need"><b>필요한 것</b><span>Windows PC</span><span>Claude 또는 ChatGPT(Codex) 구독 (추가 비용 없음)</span><span>AI 분석만 쓸 땐 API 키 불필요</span></div>
+    <a class="btn tg xl" href="https://t.me/+lSc9tuwXMaNmNDE1" target="_blank" rel="noopener"><svg class="i"><use href="#i-send"/></svg>텔레그램 자료실에서 받기</a>
+  </div>
+</div></section>
+
+<section id="get"><div class="wrap dl">
+  <div class="dl-main" data-rise>
+    <span class="eyebrow">자료실에서 받기</span>
+    <h2>텔레그램 자료실에서 받아 내 PC에서</h2>
+    <p class="sub">AI 실제 버전은 텔레그램 자료실에서만 배포합니다. 압축을 풀고 내가 쓰는 AI의 실행 파일만 더블클릭하면 켜집니다.</p>
+    <ol>
+      <li>텔레그램 자료실에 들어가 <b>PIXEL TRADING FLOOR 실제 버전</b> zip을 받습니다</li>
+      <li>압축을 풉니다</li>
+      <li>쓰는 AI에 맞는 실행 파일만 더블클릭 — Claude는 <code>실행_클로드.cmd</code>, ChatGPT는 <code>실행_챗GPT.cmd</code></li>
+    </ol>
+    <p class="dl-perk">내 AI 구독을 연결하면 강력한 AI 분석 기능을 쓸 수 있고, 구독을 하지 않더라도 챌린지를 통해 신호를 받아보실 수 있습니다.</p>
+    <p class="dl-perk dl-auto">거래소 API를 연동하면 AI 분석 결과를 실제 거래소 자동매매로도 이어갈 수 있습니다.<small>거래소 API 키를 직접 연동해야 쓸 수 있고, 1회씩 진입 방식·자동매매 ON/OFF 등을 선택할 수 있습니다. 투자 판단과 손실의 책임은 본인에게 있습니다.</small></p>
+    <p class="req">Windows PC 기준 · AI 분석은 Claude Pro·Max 또는 ChatGPT(Codex) 유료 요금제 연결 필요 · AI 분석만 쓸 때는 API 키·거래소 키 불필요</p>
+    <div class="btns" style="margin-top:22px"><a class="btn tg lg" href="https://t.me/+lSc9tuwXMaNmNDE1" target="_blank" rel="noopener"><svg class="i"><use href="#i-send"/></svg>텔레그램 자료실 열기</a></div>
+  </div>
+  <div class="obs" data-rise>
+    <div class="ic"><svg class="i"><use href="#i-lock"/></svg></div>
+    <h3>내 PC에서만 돕니다</h3>
+    <p>시세는 키 없는 공개 API에서 읽기만 하고, 직원들은 본인 Claude 또는 ChatGPT(Codex) 로그인으로 분석합니다. 분석 결과는 PC의 reports 폴더에 파일로 남고 밖으로 보내지 않습니다. 자동매매를 연동한 경우에만 주문이 내가 연결한 거래소로 전달됩니다.</p>
+  </div>
+</div></section>
+
+<section class="apply-sec"><div class="wrap">
+  <div class="apply" id="apply">
+    <div class="ap-copy"><span class="eyebrow">리치 트레이딩 챌린지</span><h3>실전 챌린지에 참가하세요</h3>
+      <p>AI 분석 기능이나 리치 트레이딩 애널라이저를 별도의 프로그램으로 직접 만들 필요 없이, 리치 트레이딩 룸이 잡은 실시간 포지션을 텔레그램 알림으로 받아 보며 한 계좌로 계속 이어서 쌓아 가는 수익 쌓기 챌린지입니다.</p>
+      <p class="ap-where">1,000달러 챌린지는 영상에서 보여 드리는 AI 트레이딩 챌린지이고, 이와 별도로 운영되는 실시간 챌린지도 종목별로 진행 중입니다. 참가 신청은 카카오톡 채널 1:1 채팅으로 받습니다.</p>
+      <div class="ap-live" id="applyStats" hidden>
+        <div class="ap-head"><span class="dot"></span><b id="apTitle">RICH 챌린지</b><small class="ap-virt">가상 계좌 · 익절·손절 모두 반영</small><span class="live">LIVE</span></div>
+        <div class="ap-grid">
+          <div><span>잔고 (USDT)</span><b id="apEq">–</b></div>
+          <div><span>누적 수익률</span><b id="apRoi">–</b></div>
+          <div><span>전적</span><b id="apWl">–</b></div>
+          <div><span>지금 포지션</span><b id="apOpen">–</b></div>
+        </div>
+        <div class="ap-spark" id="apSpark"></div>
+        <small class="ap-note" id="apNote"></small>
+      </div>
+    </div>
+    <a class="btn gold xl" href="https://pf.kakao.com/_ICyin/chat" target="_blank" rel="noopener">카카오톡으로 신청하기<svg class="i"><use href="#i-arrow"/></svg></a>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap faq">
+  <div class="sec-head"><span class="eyebrow">FAQ</span><h2>자주 묻는 질문</h2></div>
+  <details><summary>페이지에서 돌아가는 화면도 AI가 분석하나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>아니요. 페이지 속 화면은 실시간 뉴스 분석과 AI 기능이 빠진 데모 버전으로, AI 엔진 대신 자체 트레이딩 로직을 탑재했습니다. 브라우저가 바이낸스 공개 시세를 직접 받아 정해진 알고리즘으로 계산하고, 직원 말풍선은 그 결과를 문장으로 옮긴 것입니다. AI 직원 13명이 각자 생각하고 토론하는 건 자료실의 실제 버전입니다.</p></details>
+  <details><summary>데모 버전은 몇 번까지 쓸 수 있나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>횟수 제한 없이 마음껏 쓸 수 있습니다. 분석할 때마다 실시간 시세·차트·수급 지표를 새로 받아 계산하고, 열린 모의 포지션은 그 뒤에도 실시간으로 정산됩니다. 모의 계좌와 매매 내역은 이 브라우저에만 저장됩니다. 실시간 뉴스까지 읽는 AI 분석을 쓰려면 텔레그램 자료실에서 실제 버전을 받아 내 PC에 설치하세요 — Claude나 ChatGPT(Codex)를 구독 중이라면 추가 비용도 없습니다.</p></details>
+  <details><summary>데모 버전은 어떤 규칙으로 판정하나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>여러 시간대의 신호를 겹쳐 점수를 매기는 다중 요인 알고리즘입니다. ① 추세 필터 — 1시간봉 EMA50 대비 가격 위치(±0.1% 밴드)로 방향을 정합니다. ② 진입 트리거 — 5분봉 72개(6시간) 가격 박스 돌파, 볼린저 밴드(20, 2σ) 이탈 후 재진입을 봅니다. ③ 모멘텀 게이트 — 5분 RSI(14, 와일더)가 롱 75 이상·숏 25 이하면 추격으로 보고 확신도에서 10점을 뺍니다. ④ 보조 투표 — 공포탐욕지수·펀딩비·상위 트레이더 롱숏 비율은 쏠린 반대편에, 미결제약정×가격 흐름(신규 롱·신규 숏·숏 커버·롱 정리)은 새로 들어오는 돈 쪽에 0.5표씩 더합니다. ⑤ 확신도 = 50 + 10 × (추세 + 트리거 + 보조 합) − 추격 페널티, 50~85%로 제한합니다. 신호가 약해도 관망하지 않고 추세 쪽으로 ‘체험용 진입’을 표시합니다. ⑥ 리스크 게이트가 손절가보다 청산가가 먼저 오는 계획을 거르고, 알고리즘 모드는 PM이 한 번 더 심사해 과열(RSI 70/30)이나 확신도 60% 미만이면 증거금을 절반으로 줄입니다. 체험이 빨리 끝나도록 100배 고정으로 증거금 +15%에서 익절, −30%에서 손절하며, 100배는 가격이 약 0.5%만 반대로 가도 증거금 전액이 청산되는 배율입니다.</p></details>
+  <details><summary>차트의 초록·빨강 상자는 무엇인가요?<svg class="i"><use href="#i-plus"/></svg></summary><p>매수·매도 판정이 나오면 진입가에서 목표가까지는 초록, 손절가까지는 빨강으로 칠해 보여 줍니다. 오른쪽 가격표에 목표·진입·현재·손절·청산가가 붙고, 보유 중이면 왼쪽 위에 실시간 손익이 표시됩니다.</p></details>
+  <details><summary>모의 계좌는 어디에 저장되나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>이 브라우저에만 저장됩니다. 다른 기기와 공유되지 않고, 브라우저 데이터를 지우거나 [모의 계좌 초기화]를 누르면 10,000 USDT로 돌아갑니다. 데모 버전에서는 실제 주문이 나가지 않습니다.</p></details>
+  <details><summary>실제 버전은 어떻게 동작하나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>내 PC에서 작은 서버가 돌고 직원 13명이 본인 Claude 또는 ChatGPT(Codex) 구독 로그인으로 각자 분석합니다. AI 분석만 쓸 때는 API 키·거래소 키·결제 수단이 필요 없고, 결과는 PC의 reports 폴더에 파일로 남습니다.</p></details>
+  <details><summary>자동매매도 되나요?<svg class="i"><use href="#i-plus"/></svg></summary><p>실제 버전은 거래소 API 키를 직접 연동하면 AI 분석 결과를 실제 거래소 자동매매로 이어갈 수 있습니다. 1회씩 진입하는 방식, 자동매매 ON/OFF 등을 선택할 수 있고, 데모 버전에서는 실제 주문이 나가지 않습니다. 투자 판단과 손실의 책임은 본인에게 있습니다.</p></details>
+  <details><summary>Claude나 ChatGPT를 구독 중이면 실제 버전은 무료인가요?<svg class="i"><use href="#i-plus"/></svg></summary><p>네. 실제 버전은 텔레그램 자료실에서 무료로 받고, AI 분석은 내 PC에서 본인 Claude 또는 ChatGPT(Codex) 로그인으로 돌아가 이미 쓰고 있는 요금제의 사용량 안에서 처리됩니다. AI 분석에는 API 키나 별도 결제가 필요 없고, 요금제별 사용량 한도는 그대로 적용됩니다.</p></details>
+  <details><summary>좌우에 보이는 챌린지 현황과 소통방은 무엇인가요?<svg class="i"><use href="#i-plus"/></svg></summary><p>왼쪽(좁은 화면은 왼쪽 아래 버튼)의 맨 위는 영상에서 보여 드리는 AI 트레이딩 챌린지(1,000달러 챌린지, 실계좌)입니다. 영상에서 보여 드리는 챌린지 현황이라, 영상에서 공개한 날의 잔고만 점으로 찍히고 점 사이의 일별 변동은 표시되지 않습니다. 매매 내역은 확인된 거래만 아래에 올립니다. 그 아래 "신호방 따라가기"는 텔레그램 방들이 실시간으로 낸 포지션을 10,000 USDT 가상 계좌에 익절·손절 모두 그대로 반영한 기록으로, 10월 1일부터 새로 한 계좌에 이어서 쌓고 있습니다(수수료 미반영 · 실제 계좌 수익이 아님). 아래 체결 목록은 최근 익절만 보여 드리고, 잔고·승패·수익률은 손절을 포함한 전체 기준입니다. 두 기록 모두 미래 수익을 보장하지 않습니다. 오른쪽은 텔레그램 커뮤니티 소통방 대화이고, 챌린지 참가 신청은 카카오톡 채널로 받습니다.</p></details>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="flogo"><canvas data-agent="pm" width="16" height="16" aria-hidden="true"></canvas><span class="pixel">PIXEL TRADING FLOOR</span></div>
+  <p>에이전트 구조: TradingAgents — Multi-Agents LLM Financial Trading Framework (Tauric Research · Xiao et al., arXiv:2412.20138 · Apache-2.0) 참고, 제휴 관계 없음 · 픽셀 폰트 Galmuri · 본문 폰트 Pretendard · 애니메이션 GSAP</p>
+  <p>시세: 바이낸스 USDT 무기한 공개 API · 공포탐욕지수 alternative.me. 거래소와 제휴한 공식 서비스가 아닙니다.</p>
+  <p>데모 버전은 페이퍼 트레이딩이라 실주문이 없습니다 · 실제 버전의 거래소 API 자동매매는 선택 기능이며 손실의 책임은 본인에게 있습니다 · 투자 자문 아님 · 페이지 속 화면은 AI 엔진 대신 자체 트레이딩 로직을 쓰는 데모 버전 · 형제 프로젝트 <a href="https://richtradingschool.github.io/fly-trader/">초파리 트레이딩</a> · 빌드 2026-10-02 10:23 UTC</p>
+</div></footer>
+<!-- 작동 원리 예시 대화 — reports/2026-08-04-SKHYNIX-2008.md(실제 버전·알고리즘·claude opus) 원문 그대로. 떨어진 문장을 이을 때만 " … " -->
+<script type="application/json" id="howChat">{
+  "source": "2026-08-04 20:08 KST · SK하이닉스 · 알고리즘 모드 · Claude opus",
+  "stages": [
+    [
+      {"id": "taro", "who": "TARO", "role": "기술적 분석", "say": "SMA20·50 아래에 MACD 히스토그램도 음(-)이라 추세는 여전히 약세입니다. 다만 RSI 41.8 중립에 1,246,000 저점 이후 반등이 나와, 1,550,000 지지와 1,718,000 돌파 여부가 갈림길입니다.", "more": "특히 7월 29일에는 거래량 12,428,883주가 터지며 저가 1,246,000원까지 밀렸는데, 이는 최근 20일 최저점이자 투매성 바닥으로 볼 수 있는 지점입니다. RSI14는 41.8로 과매도(30)까지는 아닌 중립 영역이라, 지표상으로는 추가 하락 여력과 반등 여력이 모두 열려 있는 애매한 상태입니다."},
+      {"id": "diana", "who": "DIANA", "role": "기본적 분석", "say": "현재가 ₩1,577,000, 52주 저점 대비 약 6.4배·고점 대비 47% 수준. 다만 PER·EPS 등 밸류에이션 지표는 데이터 없음이라 확정 판단 유보. 전일 대비 +0.64%로 방향성은 중립.", "more": "당일 변동폭은 저가 ₩1,483,000에서 고가 ₩1,630,000으로 약 9.9%에 달해, 하루 안에서도 매수·매도 공방이 격렬했음을 보여줍니다."},
+      {"id": "nova", "who": "NOVA", "role": "뉴스 분석", "say": "SK하이닉스는 현재 ₩1,577,000, 전일 대비 +0.64%로 소폭 반등한 상태다. 다만 헤드라인 6번에서 확인되듯 직전 세션엔 '상한가 부담감'으로 주가가 8%대 하락했고, 코스피가 6250선까지 밀리는 가운데 외국인과 기관의 쌍끌이 매도가 하락을 주도했다는 점이 부담이다.", "more": "뉴스 톤 자체는 엇갈린다. 1·2번은 '4일 밤부터 가능'하다는 이벤트 기대와 '300만닉스' 재도전 기대를 담아 개미 심리를 자극하는 반면, 4·5번은 미국장 상승에도 '숨고르기냐 하락 신호탄이냐'를 물으며 오늘 하락 원인을 짚는 방어적 논조다. 3번의 주주환원 전망은 'ADR로 공개 불가' vs '계획 없다'로 정면 충돌해 아직 확정된 촉매가 아니며, 8번의 '이 뉴스 2개 뜨면 팔아라'는 반도체 사이클 끝물 경계론까지 얹는다."},
+      {"id": "vibe", "who": "VIBE", "role": "센티먼트", "say": "심리는 '기대 반 경계 반'으로 팽팽하다. +0.64% 강보합에 '300만닉스' 기대감과 '반도체 끝물·8%대 하락' 경고가 정면충돌 중이다. 방향성 확인 전까진 관망이 정석.", "more": "수치를 해석하면, 6번의 '8%대 하락'과 7번의 '20% 넘는 폭등'이 한 종목의 최근 뉴스 흐름에 공존한다는 점에서 변동성이 극단적으로 확대된 상태임을 알 수 있습니다."}
+    ],
+    [
+      {"id": "bull", "who": "BULL", "role": "턴 1 · 매수 논거", "say": "1,246,000원 투매 바닥에 12,428,883주가 터진 건 항복이자 바닥 신호입니다. 이후 1,718,000원까지 반등하고 1,550,000원 지지가 살아있으니, 목표가 반토막 레벨에서 지금은 담을 자리입니다.", "more": "RSI14 41.8은 과매도가 아니라 '반등 초입의 건강한 중립'으로, 아직 과열 없이 상승 여력이 열려 있음을 뜻합니다."},
+      {"id": "bear", "who": "BEAR", "role": "턴 2 · 매도 논거", "say": "12,428,883주 대량거래는 바닥이 아니라 투매 지속일 수 있습니다. 1,718,000원 반등이 실패하고 오늘 저가 1,483,000원까지 재차 밀린 건 데드캣 신호이며, SMA20·MACD 음(-)의 하락추세가 유효한 지금은 매도 자리입니다.", "more": "BULL이 강조한 '목표가 반토막' 저평가 서사는 헤드라인 인용일 뿐, PER·PBR·EPS·목표가 절대값 등 이를 검증할 펀더멘털 수치는 데이터 없음이라 매수 근거로 삼기 어렵습니다."},
+      {"id": "bull", "who": "BULL", "role": "턴 3 · 반박", "say": "BEAR가 든 '1,483,000원 재하락'은 종가가 아니라 오늘 장중 저가일 뿐, 그 자리에서 1,630,000원까지 되받아 +0.64% 강보합으로 마감했습니다. 저점 이탈이 아니라 방어 성공이며, 1,246,000원 대량거래 바닥 위에서 저점을 높이는 매집 구조입니다.", "more": "BEAR 스스로 세운 '종가 1,483,000원 이탈' 트리거는 오늘 발동되지 않았습니다. 오히려 저가에서 147,000원을 되받은 이 되돌림이야말로 지지 확인 신호입니다."},
+      {"id": "bear", "who": "BEAR", "role": "턴 4 · 재반박", "say": "오늘 저가 1,483,000원은 BULL이 지지선이라던 1,550,000원(7/28 종가)을 이미 깬 겁니다. 저점을 높인 게 아니라 낮춘 것이며, SMA20 하회·MACD 음(-)의 추세는 그대로입니다. +0.64% 강보합은 반등이 아니라 힘없는 되돌림, 매도 자리입니다.", "more": "BULL 스스로 매수 유효 조건으로 내건 지지선은 7월 28일 종가 1,550,000원인데, 오늘 저가 1,483,000원은 그 1,550,000원을 67,000원이나 하회한 수치입니다. 즉 저점은 높아진 게 아니라 낮아졌고, 장중이나마 자신이 세운 지지선을 이미 잃은 셈입니다."}
+    ],
+    [
+      {"id": "ace", "who": "ACE", "role": "최종 판정 · HOLD", "say": "지금 가격 1,577,000원은 지지 1,483,000원과 저항 1,718,000원의 정중앙으로, 어느 쪽으로도 확률 우위가 없는 무엣지 구간입니다.", "more": "반대 시나리오로 헤드라인 6번의 외국인·기관 쌍끌이 매도와 코스피 6250선 약세가 재개되면 오늘의 +0.64%는 데드캣 바운스에 그치고, 특히 연환산 변동성 134.4%에 20배 레버리지가 얹히면 하루 등락만으로 청산 리스크가 극단적입니다. … 상방 트리거는 종가 기준 1,718,000원 돌파 시 SMA20 1,819,200원까지 추격 롱, 여기에 4일 밤 예정 이벤트(헤드라인 1번) 호재 확인과 외국인·기관 순매수 전환이 겹치면 확신을 키웁니다."}
+    ],
+    [
+      {"id": "risky", "who": "RISKY", "role": "공격적 리스크", "say": "HOLD은 지나치게 몸을 사린 판단이다. 1,718,000 돌파를 기다리면 저점 대비 +9% 비싸게 잡는 기회비용이 크다. 1,246,000 대량거래 바닥 위 저점 다지기에 지금 선제 롱을 분할로 태울 자리다.", "more": "다만 최대 리스크는 명확히 못박는다 — 격리 20배는 약 -5% 역행이면 증거금 전액이 청산되는데, 현재가에서 손절선 1,483,000원까지는 약 -5.96%로 이미 청산가와 겹친다."},
+      {"id": "safe", "who": "SAFE", "role": "보수적 리스크", "say": "진입 보류가 정답입니다. 20배 격리는 -5% 역행이면 증거금 전액 청산인데, 오늘 장중 변동폭만 9.9%였습니다. 중간대 신규 베팅은 자살 진입, 트리거(종가 1,718,000 돌파/1,483,000 이탈) 확인 후에만 축소 진입하십시오.", "more": "즉 이 종목·이 레버리지에서 중간대 신규 진입의 최대 손실은 '증거금 전액'이며, 확률 우위가 없는 자리에서 이 꼬리위험을 떠안을 이유가 없습니다."},
+      {"id": "neutral", "who": "NEUTRAL", "role": "중립적 리스크", "say": "수석의 HOLD·확신 60%에 동의한다. 방향 미확정 중간대에서 20배 격리 신규진입은 -5% 청산·손절선 겹침 탓에 자살진입이다. 종가 1,718,000원 돌파(롱)나 1,483,000원 이탈(숏) 확인 전까지 관망, 진입 시 실효 5~7배·계좌 1.5~2% 상한이 조건이다.", "more": "절충안으로 조건부 승인을 제시한다. 선제 분할 롱은 기각하고, 신규 진입은 트리거 확인 후에만 허용한다."}
+    ],
+    [
+      {"id": "pm", "who": "PM", "role": "AMEND · 수정 승인", "say": "현재가 1,577,000원은 지지 1,483,000·저항 1,718,000의 정중앙이라 확률 우위가 없습니다. 20배·변동성 134.4%에선 중간대 진입이 청산으로 직결돼 HOLD 유지하되, 트리거 진입 시 실효 5~7배·계좌 리스크 2% 상한을 못박는 조건으로 수정승인합니다.", "more": "과거 7월 29일 HOLD가 +19.29% 상승을 놓친 점은 무겁게 받아들이지만, 오늘은 1,550,000원 지지가 장중 이미 67,000원 이탈됐고 방향이 미확정이라 신규 베팅보다 트리거 확인이 우선이라는 점이 그때와 달라진 관전 포인트입니다."}
+    ]
+  ]
+}</script>
+<script src="sprites.js"></script>
+<script src="liquid-glass.js"></script>
+<script type="module">
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const root = document.documentElement;
+const MOTION = root.classList.contains('motion');
+const FLY_FEED = 'https://richtradingschool.github.io/fly-trader/feed.json';
+const fmt = (v, d = 2) => Number(v).toLocaleString('ko-KR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const sgn = (v, d = 2) => (Math.abs(v) < .5 * 10 ** -d ? '' : v > 0 ? '+' : '−') + fmt(Math.abs(v), d);
+const tone = v => (v > .004 ? 'up' : v < -.004 ? 'down' : '');
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const usd = (v, d = 0) => `$${fmt(v, d)}`;
+const KST = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+const parts = t => Object.fromEntries(KST.formatToParts(new Date(t * 1000)).map(p => [p.type, p.value]));
+const now = () => Date.now() / 1000;
+let gs = null; // gsap, 로드되면
+
+// ---- 픽셀 직원 (sprites.js = 빌드 때 app.js에서 뽑은 스프라이트 표) ----
+function drawSprite(cv, id) {
+  const S = window.PTF_SPRITES;
+  const ch = S && S.chars[id];
+  if (!ch) return;
+  const px = cv.width / 16;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  for (let r = 0; r < 16; r++) {
+    const row = (ch.overrides && ch.overrides[r]) || S.rows[r];
+    for (let c = 0; c < 16; c++) {
+      const col = ch.palette[row[c]];
+      if (col) { ctx.fillStyle = col; ctx.fillRect(c * px, r * px, px, px); }
+    }
+  }
+}
+$$('canvas[data-agent]').forEach(cv => drawSprite(cv, cv.dataset.agent));
+
+// ---- 상단 시세 띠 (바이낸스 USDⓈ-M 공개 API, 30초) — 코인·미국 주식·삼성전자·SK하이닉스·금 무기한, 종목은 띠에 적힌 그대로 ----
+const TK = [...new Set($$('[data-tk]').map(el => el.dataset.tk))];
+const pfmt = v => (v >= 1000 ? fmt(v, 0) : v >= 1 ? fmt(v, 2) : String(Number(v.toPrecision(4))));
+async function pollTicker() {
+  const rows = await Promise.allSettled(TK.map(s => fetch(`https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=${s}USDT`)
+    .then(r => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))));
+  rows.forEach((r, i) => {
+    if (r.status !== 'fulfilled') return;
+    const p = +r.value.lastPrice;
+    const c = +r.value.priceChangePercent;
+    if (!Number.isFinite(p)) return;
+    $$(`[data-tk="${TK[i]}"]`).forEach(el => { el.textContent = `$${pfmt(p)}`; });
+    $$(`[data-tkp="${TK[i]}"]`).forEach(el => { el.textContent = Number.isFinite(c) ? `${sgn(c)}%` : ''; el.dataset.tone = tone(c); });
+  });
+}
+const track = $('#tkTrack');
+if (MOTION) {
+  const set = track.firstElementChild;
+  const copy = set.cloneNode(true);
+  copy.setAttribute('aria-hidden', 'true');
+  copy.querySelectorAll('a').forEach(a => { a.tabIndex = -1; }); // 흐르는 복제본의 링크는 탭 키로 두 번 잡히지 않게
+  track.append(copy);
+  const speed = () => track.style.setProperty('--dur', `${Math.max(30, set.offsetWidth / 42)}s`);
+  speed();
+  track.classList.add('run');
+  new ResizeObserver(speed).observe(set);
+}
+
+// ---- 첫 화면 LIVE 시연 — 넓은 화면에서만 데모 버전을 키오스크로 띄운다 (휴대폰·움직임 줄이기는 캡처) ----
+const screen = $('#officeScreen');
+const wide = matchMedia('(min-width: 960px)');
+function mountOffice() {
+  if (!screen || !wide.matches || !MOTION || screen.querySelector('iframe')) return;
+  const f = document.createElement('iframe');
+  f.src = 'app/?kiosk=1&rec=1&vertical=0';
+  f.title = '트레이딩 오피스 자동 시연';
+  f.tabIndex = -1;
+  f.setAttribute('aria-hidden', 'true');
+  f.addEventListener('load', () => setTimeout(() => {
+    screen.classList.add('live');
+    screen.closest('.office')?.classList.add('is-live');
+    $('#officeCapText').textContent = '실시간 시연 — 90초마다 BTC를 분석합니다';
+  }, 1500));
+  screen.prepend(f);
+  const fit = () => { f.style.transform = `scale(${screen.clientWidth / 1440})`; };
+  fit();
+  new ResizeObserver(fit).observe(screen);
+}
+setTimeout(mountOffice, 1200); // 첫 등장 애니메이션을 방해하지 않게 조금 뒤에
+wide.addEventListener('change', mountOffice);
+
+// ---- 직접 돌려 보기 — 페이지 가운데에 데모 버전을 그대로 (PC는 가까워지면 자동, 휴대폰은 눌러서 시작) ----
+// 칸이 휴대폰 배치(820px 이하)보다 넓은데 1280보다 좁으면 1280 기준으로 그려서 줄인다 — PC 배치는 폭 1100 이상이 필요하다
+const tryScreen = $('#tryScreen');
+const DESIGN_W = 1280;
+const PHONE_W = 820; // 데모 버전(public/index.html)이 뜰 때 한 번만 보는 휴대폰 배치 기준
+let tryMode = '';    // 화면 속 앱이 뜰 때 정해진 배치 — 'm'(휴대폰) · 'pc'
+let tryReload = 0;
+// 배치는 앱이 뜰 때 한 번만 정해진다 — 폭이 기준을 넘나들면(창 줄이기·휴대폰 회전) 맞는 배치로 다시 띄운다.
+// 분석 중이면 끝난 뒤에. 모의 계좌는 브라우저 저장소라 다시 떠도 그대로다.
+function scheduleTryReload(mode) {
+  clearTimeout(tryReload);
+  tryReload = setTimeout(() => {
+    const f = tryScreen && tryScreen.querySelector('iframe');
+    if (!f) return;
+    let busy = false;
+    try { busy = !!(f.contentWindow.LITE && f.contentWindow.LITE.engine.isRunning()); } catch { busy = false; }
+    if (busy) { scheduleTryReload(mode); return; }
+    tryMode = mode;
+    fitTry(); // 새 배치 크기로 맞춘 뒤 다시 띄워야 앱이 맞는 배치를 고른다
+    try { f.contentWindow.location.reload(); } catch { f.src = f.src; }
+  }, 500);
+}
+function fitTry() {
+  const f = tryScreen && tryScreen.querySelector('iframe');
+  if (!f) return;
+  const w = tryScreen.clientWidth;
+  const h = tryScreen.clientHeight;
+  // 경계 ±20px는 그대로 둔다 — 스크롤바 하나에 흔들리며 계속 다시 뜨지 않게
+  const want = w <= PHONE_W - 20 ? 'm' : w > PHONE_W + 20 ? 'pc' : tryMode;
+  if (tryMode && want !== tryMode) scheduleTryReload(want);
+  // PC 배치는 1280 기준으로 그려서 줄인다(다시 뜨기 전 잠깐 좁아져도 잘리지 않게) · 휴대폰 배치는 칸 폭 그대로
+  const k = tryMode === 'pc' && w < DESIGN_W ? w / DESIGN_W : 1;
+  f.style.width = `${Math.round(w / k)}px`;
+  f.style.height = `${Math.round(h / k)}px`;
+  f.style.transform = k === 1 ? 'none' : `scale(${k})`;
+}
+function mountTry(focus) {
+  if (!tryScreen || tryScreen.querySelector('iframe')) return;
+  const f = document.createElement('iframe');
+  f.src = 'app/?embed=1';
+  f.title = 'PIXEL TRADING FLOOR 데모 버전 — 직접 분석해 보기';
+  tryScreen.classList.add('on');
+  tryScreen.append(f);
+  tryMode = tryScreen.clientWidth <= PHONE_W ? 'm' : 'pc';
+  fitTry();
+  new ResizeObserver(fitTry).observe(tryScreen);
+  if (focus) f.addEventListener('load', () => { try { f.contentDocument.querySelector('#symbol-input')?.focus({ preventScroll: true }); } catch { /* 무시 */ } }, { once: true });
+}
+$('#tryStart')?.addEventListener('click', () => mountTry(true));
+if (tryScreen && wide.matches && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { mountTry(false); io.disconnect(); } }, { rootMargin: '500px 0px' });
+  io.observe(tryScreen);
+}
+// ---- TradingAgents 깃허브 카드 — 스타 수는 GitHub 공개 API로 다시 읽고(안 되면 확인해 둔 값·날짜), 화면에 들어오면 카운트업 ----
+const gh = $('#ghCard');
+if (gh) {
+  const G = { stars: +gh.dataset.stars, forks: +gh.dataset.forks, watch: +gh.dataset.watch, asOf: gh.dataset.asof, shown: false };
+  const kfmt = v => (v >= 1000 ? `${(v / 1000).toFixed(v >= 10000 ? 0 : 1)}k` : String(v));
+  const big = v => `${(v / 1000).toFixed(1)}k`;
+  const paint = () => {
+    $('#ghWatch').textContent = kfmt(G.watch);
+    $('#ghForks').textContent = kfmt(G.forks);
+    $('#ghStarBtn').textContent = `${Math.floor(G.stars / 1000)}k`;
+    $('#ghMilestone').hidden = G.stars < 100000; // 10만 밑으로 내려가면 "10만 개 돌파"라고 쓰지 않는다
+    $('#ghAsOf').textContent = `${G.asOf} 기준`;
+    if (G.shown) $('#ghStars').textContent = big(G.stars);
+  };
+  const countUp = () => {
+    if (G.shown) return;
+    G.shown = true;
+    const el = $('#ghStars');
+    if (!MOTION) { el.textContent = big(G.stars); return; }
+    const t0 = performance.now();
+    const step = ts => {
+      const t = Math.min(1, (ts - t0) / 1600);
+      el.textContent = big(G.stars * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if ('IntersectionObserver' in window) {
+    const seen = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { countUp(); seen.disconnect(); } }, { threshold: .35 });
+    seen.observe(gh);
+  } else countUp();
+  fetch('https://api.github.com/repos/TauricResearch/TradingAgents', { headers: { Accept: 'application/vnd.github+json' } })
+    .then(r => (r.ok ? r.json() : null))
+    .then(j => {
+      if (!j || !Number.isFinite(j.stargazers_count)) return;
+      G.stars = j.stargazers_count;
+      if (Number.isFinite(j.forks_count)) G.forks = j.forks_count;
+      if (Number.isFinite(j.subscribers_count)) G.watch = j.subscribers_count;
+      G.asOf = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul' }).format(new Date()); // YYYY-MM-DD
+      paint();
+    })
+    .catch(() => { /* 한도 초과·오프라인 — 확인해 둔 값 그대로 */ });
+  paint();
+}
+
+// ---- 작동 원리 — 스크롤 위치에 맞춰 단계·직원을 켜고, 그 단계의 실제 버전 리포트 원문을 직원들이 번갈아 타이핑한다 ----
+const steps = $$('.steps .step');
+const org = $('#orgStage');
+const ocBody = $('#ocBody');
+const CHAT = (() => { try { return JSON.parse($('#howChat').textContent); } catch { return null; } })();
+if (CHAT && $('#ocSrc')) $('#ocSrc').textContent = CHAT.source;
+const nap = ms => new Promise(ok => setTimeout(ok, ms));
+let chatStage = '';
+let chatTok = 0;
+let chatSeen = !('IntersectionObserver' in window);
+if (org && !chatSeen) new IntersectionObserver(es => { chatSeen = es.some(e => e.isIntersecting); }).observe(org);
+function chatMsg(m) {
+  const el = document.createElement('div');
+  el.className = 'oc-msg';
+  el.innerHTML = `<canvas width="32" height="32" aria-hidden="true"></canvas><div><span class="oc-who">${esc(m.who)} <em>· ${esc(m.role)}</em></span><p class="oc-say"></p>${m.more ? '<p class="oc-more"></p>' : ''}</div>`;
+  drawSprite(el.querySelector('canvas'), m.id);
+  return el;
+}
+// 띠리리릭 — 화면에 안 보이거나 탭이 가려지면 멈췄다가 이어서, 단계가 바뀌면(tok) 그만
+async function typeText(p, text, perSec, tok) {
+  const node = document.createTextNode('');
+  const caret = document.createElement('i');
+  caret.className = 'oc-caret';
+  p.append(node, caret);
+  const step = Math.max(1, Math.round(perSec / 30));
+  for (let i = 0; i < text.length;) {
+    if (tok !== chatTok) return false;
+    if (!chatSeen || document.hidden) { await nap(300); continue; }
+    // 맨 아래를 보고 있을 때만 따라 내려간다 — 위로 올려 읽는 중이면 두고
+    const follow = ocBody.scrollHeight - ocBody.scrollTop - ocBody.clientHeight < 48;
+    i = Math.min(text.length, i + step);
+    node.data = text.slice(0, i);
+    if (follow) ocBody.scrollTop = ocBody.scrollHeight;
+    await nap(33);
+  }
+  caret.remove();
+  return true;
+}
+async function playChat(n) {
+  const tok = ++chatTok;
+  $$('.ppl figure.talking').forEach(f => f.classList.remove('talking'));
+  ocBody.textContent = '';
+  const list = CHAT.stages[n - 1] || [];
+  if (!MOTION) { // 움직임 줄이기 — 타이핑 없이 그 단계 원문을 한 번에
+    list.forEach(m => {
+      const el = chatMsg(m);
+      el.querySelector('.oc-say').textContent = m.say;
+      if (m.more) el.querySelector('.oc-more').textContent = m.more;
+      ocBody.append(el);
+    });
+    return;
+  }
+  for (;;) {
+    for (const m of list) {
+      const el = chatMsg(m);
+      ocBody.append(el);
+      while (ocBody.children.length > 4) ocBody.firstElementChild.remove();
+      ocBody.scrollTop = ocBody.scrollHeight;
+      const fig = $(`.ppl canvas[data-agent="${m.id}"]`)?.closest('figure');
+      fig?.classList.add('talking');
+      let ok = await typeText(el.querySelector('.oc-say'), m.say, 60, tok);
+      if (ok && m.more) ok = await typeText(el.querySelector('.oc-more'), m.more, 180, tok);
+      fig?.classList.remove('talking');
+      if (!ok) return;
+      await nap(1100);
+      if (tok !== chatTok) return;
+    }
+    await nap(9000); // 한 바퀴 끝 — 잠시 뒤 같은 단계를 처음부터 다시
+    if (tok !== chatTok) return;
+    ocBody.textContent = '';
+  }
+}
+function howScroll() {
+  if (!org || !steps.length) return;
+  let on = 0;
+  steps.forEach((st, i) => { if (st.getBoundingClientRect().top < innerHeight * .55) on = i; });
+  steps.forEach((st, i) => st.classList.toggle('on', i === on));
+  const stage = String(on + 1);
+  if (org.dataset.stage === stage && chatStage === stage) return;
+  org.dataset.stage = stage;
+  $$('.grp', org).forEach(g => {
+    const n = +g.dataset.grp;
+    g.classList.toggle('on', n === on + 1);
+    g.classList.toggle('done', n < on + 1);
+  });
+  if (CHAT && ocBody && chatStage !== stage) { chatStage = stage; playChat(on + 1); }
+}
+
+// ---- 스크롤: 진행 막대 · 머리말 숨김 · 현재 메뉴 ----
+const chrome = $('#chrome');
+const prog = $('#progress');
+const navLinks = $$('nav.main a[href^="#"]');
+const navSecs = navLinks.map(a => $(a.getAttribute('href')));
+let lastY = scrollY;
+let queued = false;
+function onScroll() {
+  queued = false;
+  const y = scrollY;
+  const max = root.scrollHeight - innerHeight;
+  prog.style.transform = `scaleX(${max > 0 ? clamp(y / max, 0, 1) : 0})`;
+  const hidden = chrome.classList.contains('hide');
+  const hide = y > 260 && (y > lastY + 3 ? true : y < lastY - 3 ? false : hidden);
+  if (hide !== hidden) {
+    chrome.classList.toggle('hide', hide);
+    root.style.setProperty('--chrome-h', hide ? 'var(--tick)' : 'calc(var(--hdr) + var(--tick))');
+  }
+  lastY = y;
+  let on = -1;
+  navSecs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * .4) on = i; });
+  navLinks.forEach((a, i) => a.classList.toggle('on', i === on));
+  howScroll();
+}
+addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener('resize', () => requestAnimationFrame(onScroll));
+onScroll();
+
+// ---- 좌우 배너 — 초파리 사이트와 같은 데이터 (fly-trader/feed.json → ext/rich.json·chat.json) ----
+const railRich = $('#richRail'), railChat = $('#chatRail'), dock = $('#dock');
+const R = { recent: null, chat: null, feed: null };
+['#rApply', '#cJoin'].forEach(id => { if (!$(id).getAttribute('href')) $(id).hidden = true; });
+function showRail(el, pill) {
+  if (!el.hidden) return;
+  el.hidden = false; pill.hidden = false; dock.hidden = false;
+  requestAnimationFrame(() => requestAnimationFrame(() => { el.classList.add('ready'); pill.classList.add('ready'); }));
+}
+function hideRail(el, pill) {
+  el.hidden = true; el.classList.remove('ready', 'open'); pill.hidden = true;
+  if ($('#dRich').hidden && $('#dChat').hidden) dock.hidden = true;
+}
+$$('[data-open]').forEach(b => b.addEventListener('click', () => {
+  const el = $(`#${b.dataset.open}`);
+  (el === railRich ? railChat : railRich).classList.remove('open');
+  el.classList.toggle('open');
+  if (el === railChat) $('#cBody').scrollTop = $('#cBody').scrollHeight;
+}));
+$$('.rail [data-close]').forEach(b => b.addEventListener('click', () => b.closest('.rail').classList.remove('open')));
+addEventListener('keydown', ev => { if (ev.key === 'Escape') $$('.rail.open').forEach(r => r.classList.remove('open')); });
+function tweenNum(el, to, f) {
+  const from = el._v; el._v = to;
+  if (!gs || from === undefined || from === to) { el.textContent = f(to); return; }
+  const o = { v: from }; el._tw?.kill();
+  el._tw = gs.to(o, { v: to, duration: 1.2, ease: 'expo.out', onUpdate: () => { el.textContent = f(o.v); } });
+}
+function spark(curve, start, w = 240, h = 30) {
+  if (!curve || curve.length < 2) return '';
+  const ys = curve.map(p => p[1]), x0 = curve[0][0], x1 = curve.at(-1)[0];
+  const lo = Math.min(start, ...ys), hi = Math.max(start, ...ys);
+  const X = x => (x - x0) / Math.max(1, x1 - x0) * w, Y = y => h - (y - lo) / Math.max(1e-9, hi - lo) * h;
+  const d = curve.map((p, i) => `${i ? 'L' : 'M'}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join('');
+  const c = ys.at(-1) >= start ? 'var(--long)' : 'var(--short)', b = Y(start).toFixed(1);
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="${w}" y1="${b}" y2="${b}" stroke="rgba(255,255,255,.2)" stroke-dasharray="3 4" vector-effect="non-scaling-stroke"/><path d="${d}" fill="none" stroke="${c}" stroke-width="1.7" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`;
+}
+const whenKst = t => { const p = parts(t), n = parts(now()); return p.month === n.month && p.day === n.day ? `${p.hour}:${p.minute}` : `${p.month}/${p.day} ${p.hour}:${p.minute}`; };
+// 시세 띠 맨 앞 — 챌린지 현재 수익률(익절·손절 모두 반영된 그대로)
+function showRichTicker(label, roi, wl, tag = '가상 계좌') {
+  $$('[data-tk-rich]').forEach(el => { el.hidden = false; });
+  $$('[data-rich-tag]').forEach(el => { el.textContent = tag; });
+  $$('[data-rich-name]').forEach(el => { el.textContent = label; });
+  $$('[data-rich-roi]').forEach(el => { el.textContent = `${sgn(roi)}%`; el.dataset.tone = tone(roi); });
+  $$('[data-rich-wl]').forEach(el => { el.textContent = wl; });
+}
+function hideRichLive() {
+  $$('[data-tk-rich]').forEach(el => { el.hidden = true; });
+  const box = $('#applyStats');
+  if (box) box.hidden = true;
+}
+// 실전 챌린지 칸 — 옆 배너와 같은 계좌
+function renderApply(d) {
+  const c = d.challenge, m = d.main, box = $('#applyStats');
+  if (!box) return;
+  box.hidden = false;
+  if (m) { // 메인 = 영상에서 보여 드리는 AI 트레이딩 챌린지(실계좌). 신호방 따라가기 가상 계좌는 한 줄로 따로
+    $('#apTitle').textContent = `${m.title} · Day ${m.day}`;
+    $('.ap-virt', box).textContent = '실계좌 · 영상 속 AI 트레이딩 챌린지';
+    tweenNum($('#apEq'), +m.equity || 0, v => fmt(v));
+    const r = $('#apRoi'); r.textContent = `${sgn(+m.roi || 0)}%`; r.dataset.tone = tone(+m.roi || 0);
+    $('#apWl').textContent = `${m.wins}승 ${m.losses}패 · ${Math.round(m.wins / Math.max(1, m.wins + m.losses) * 100)}%`;
+    $('#apOpen').previousElementSibling.textContent = '신호방 따라가기 (가상)';
+    $('#apOpen').textContent = `${sgn(+c.roi || 0)}% · Day ${c.day}`;
+    $$('#applyStats .live, #richRail .live').forEach(el => { el.textContent = '실계좌 기록'; });
+    $('#apSpark').innerHTML = spark(m.points, m.start, 240, 34);
+    $('#apNote').textContent = '영상 공개일 잔고 기준 · 신호방 따라가기는 가상 계좌(수수료 미반영) · 과거 성과는 미래 수익을 보장하지 않습니다';
+    return;
+  }
+  $('.ap-virt', box).textContent = '가상 계좌 · 익절·손절 모두 반영';
+  $('#apOpen').previousElementSibling.textContent = '지금 포지션';
+  $$('#applyStats .live, #richRail .live').forEach(el => { el.textContent = 'LIVE'; });
+  $('#apTitle').textContent = `${d.title || '챌린지'} · Day ${c.day}`;
+  tweenNum($('#apEq'), +c.equity || 0, v => fmt(v));
+  const roi = $('#apRoi'); roi.textContent = `${sgn(+c.roi || 0)}%`; roi.dataset.tone = tone(+c.roi || 0);
+  $('#apWl').textContent = `${c.wins}승 ${c.losses}패${c.trades ? ` · ${Math.round(c.wins / c.trades * 100)}%` : ''}`;
+  const open = c.open || [];
+  $('#apOpen').textContent = open.length ? open.map(o => `${o.room} ${o.side}`).join(' · ') : '다음 신호 대기';
+  $('#apSpark').innerHTML = spark(c.curve, c.start, 240, 34);
+  $('#apNote').textContent = d.note || '';
+}
+function renderChallenge(d) {
+  const c = d.challenge, m = d.main, p = parts(c.start_ts);
+  const pnl = v => (Math.abs(v) < .005 ? '$0' : `${v > 0 ? '+' : '−'}${usd(Math.abs(v), 2)}`);
+  if (m) { // 메인: 영상 속 AI 트레이딩 챌린지(실계좌) — 숫자는 기록된 값 그대로, 신호방 가상 계좌는 아래에 따로
+    showRichTicker(`${m.title.replace(/\s*[\d,]+\s*달러\s*/, ' ').trim() || '챌린지'} Day ${m.day}`, +m.roi || 0, `${m.wins}승 ${m.losses}패`, '실계좌');
+    renderApply(d);
+    $('#rTitle').textContent = m.title;
+    $('#dRichName').textContent = `챌린지 Day ${m.day}`;
+    $('#rTotLbl').textContent = `Day ${m.day} · ${usd(m.start)}에서 출발 · 영상에서 보여 드리는 챌린지 현황`;
+    const mt = (m.trades || []).slice(0, 12);
+    $('#mTradesBox').hidden = !mt.length;
+    $('#mTrades').innerHTML = mt.map(t => `<li><b>${esc(t.symbol || '')}</b><span>${esc(t.side)} ${esc(t.result)} · Day ${t.day}${Number.isFinite(t.pnl) ? ` · ${t.pnl > 0 ? '+' : '−'}${usd(Math.abs(t.pnl), 2)}` : ''}</span><em data-tone="${t.roe >= 0 ? 'up' : 'down'}">${sgn(t.roe, 1)}%</em></li>`).join('');
+    tweenNum($('#rTotEq'), +m.equity || 0, v => fmt(v));
+    const mr = $('#rTotRoi'); mr.textContent = `${sgn(+m.roi || 0)}%`; mr.dataset.tone = tone(+m.roi || 0);
+    $('#rTotStart').textContent = `${m.wins}승 ${m.losses}패 · 승률 ${Math.round(m.wins / Math.max(1, m.wins + m.losses) * 100)}%`;
+    $('#dRoi').textContent = `${sgn(+m.roi || 0, 1)}%`; $('#dRoi').dataset.tone = tone(+m.roi || 0);
+    $('#rRooms').innerHTML = `<div class="rt-room">
+        <div class="top"><b>잔고 추이</b><em data-tone="${tone(+m.roi || 0)}">${usd(m.equity, 2)}</em></div>
+        ${spark(m.points, m.start, 240, 44)}
+        <div class="meta"><span>${usd(m.start)} → ${usd(m.equity)} · 영상 공개일 기준</span><span>Day ${m.day}</span></div>
+      </div>
+      <div class="rt-room"><div class="top"><b>신호방 따라가기 · 가상</b><em data-tone="${tone(+c.roi || 0)}">${sgn(+c.roi || 0)}%</em></div>
+        <div class="meta"><span>${p.month}/${p.day} 시작 · 세 방 합산 가상 계좌</span><span>${c.wins}승 ${c.losses}패</span></div>
+        ${spark(c.curve, c.start, 240, 30)}
+        ${(c.open || []).map(o => `<div class="hold"><span class="dot"></span>${esc(o.room)} ${esc(o.side)} 보유 중 · 진입 ${fmt(o.entry, o.entry < 1000 ? 2 : 1)}</div>`).join('')}
+      </div>`;
+    return;
+  }
+  $('#mTradesBox').hidden = true;
+  showRichTicker(`${(d.title || '챌린지').replace(/\s*[\d,]+\s*달러\s*/, ' ')} Day ${c.day}`, +c.roi || 0, `${c.wins}승 ${c.losses}패`);
+  renderApply(d);
+  $('#rTitle').textContent = d.title || '챌린지';
+  $('#dRichName').textContent = `챌린지 Day ${c.day}`;
+  $('#rTotLbl').textContent = `Day ${c.day} · ${p.month}/${p.day} 시작 · ${usd(c.start)}에서 출발`;
+  tweenNum($('#rTotEq'), +c.equity || 0, v => fmt(v));
+  const roi = $('#rTotRoi'); roi.textContent = `${sgn(+c.roi || 0)}%`; roi.dataset.tone = tone(+c.roi || 0);
+  $('#rTotStart').textContent = `${c.wins}승 ${c.losses}패${c.trades ? ` · 승률 ${Math.round(c.wins / c.trades * 100)}%` : ''}`;
+  $('#dRoi').textContent = `${sgn(+c.roi || 0, 1)}%`; $('#dRoi').dataset.tone = tone(+c.roi || 0);
+  $('#rRooms').innerHTML = `<div class="rt-room">
+      <div class="top"><b>잔고 추이</b><em data-tone="${tone(+c.roi || 0)}">${usd(c.equity, 2)}</em></div>
+      ${spark(c.curve, c.start, 240, 44)}
+      <div class="meta"><span>매매마다 잔고의 ${esc(c.bet_pct)}% 복리</span><span>${c.trades}회 체결</span></div>
+    </div>
+    ${(c.rooms || []).map(r => `<div class="rt-room"><div class="top"><b>${esc(r.tag)}</b><em data-tone="${tone(r.pnl)}">${pnl(r.pnl)}</em></div>
+      <div class="meta"><span>${r.trades}회 체결</span><span>${r.wins}승 ${r.trades - r.wins}패</span></div>
+      ${(c.open || []).filter(o => o.room === r.tag).map(o => `<div class="hold"><span class="dot"></span>${esc(o.side)} 보유 중 · 진입 ${fmt(o.entry, o.entry < 1000 ? 2 : 1)}</div>`).join('')}</div>`).join('')}`;
+}
+function renderRich(d) {
+  if (d.challenge) { renderChallenge(d); renderRecent(d); return; }
+  const T = d.total || {}, rooms = d.rooms || [];
+  showRichTicker(d.title || '트레이딩 룸', +T.roi || 0, `${T.wins || 0}승 ${(T.trades || 0) - (T.wins || 0)}패`);
+  $('#rTitle').textContent = d.title || '트레이딩 룸';
+  $('#dRichName').textContent = (d.title || '실전 현황').replace(/\s*트레이딩\s*룸$/, '');
+  $('#rTotLbl').textContent = `${rooms.length}개 방 합산 잔고`;
+  tweenNum($('#rTotEq'), +T.equity || 0, v => fmt(v));
+  const roi = $('#rTotRoi'); roi.textContent = `${sgn(+T.roi || 0)}%`; roi.dataset.tone = tone(+T.roi || 0);
+  $('#rTotStart').textContent = T.start ? `시작 ${usd(T.start)}` : '';
+  $('#dRoi').textContent = `${sgn(+T.roi || 0, 1)}%`; $('#dRoi').dataset.tone = tone(+T.roi || 0);
+  $('#rRooms').innerHTML = rooms.map(r => `<div class="rt-room">
+      <div class="top"><b>${esc(r.name)}${r.lev ? ` ${esc(r.lev)}×` : ''}</b><em data-tone="${tone(r.roi)}">${sgn(r.roi, 1)}%</em></div>
+      <div class="meta"><span>${usd(r.equity)}</span><span>${r.wins}승 ${r.losses}패 · 승률 ${r.trades ? Math.round(r.wins / r.trades * 100) : 0}%</span></div>
+      ${spark(r.curve, r.start)}
+      ${r.open ? `<div class="hold"><span class="dot"></span>${esc(r.open.side)} 보유 중 · 진입 ${fmt(r.open.entry, r.open.entry < 1000 ? 2 : 1)}</div>` : ''}
+    </div>`).join('');
+  renderRecent(d);
+}
+function renderRecent(d) {
+  // 목록은 최근 익절만 — 잔고·승패·수익률은 위에서 손절 포함 전체 기준으로 보여 준다
+  const recent = (d.recent_wins || (d.recent || []).filter(x => x.result === '익절')).slice(0, 8), keys = recent.map(x => `${x.room}|${x.t}|${x.side}`);
+  const fresh = R.recent ? recent.filter((x, i) => !R.recent.has(keys[i])) : [];
+  $('#rRecent').innerHTML = recent.length
+    ? recent.map((x, i) => `<li class="${R.recent && !R.recent.has(keys[i]) ? 'new' : ''}"><b>${esc(x.room)}</b><span>${esc(x.side)} ${esc(x.result)} · ${whenKst(x.t)}</span><em data-tone="${x.roe >= 0 ? 'up' : 'down'}">${sgn(x.roe, 1)}%</em></li>`).join('')
+    : '<li><span>첫 익절을 기다리는 중입니다</span></li>';
+  R.recent = new Set(keys);
+  const won = fresh.find(x => x.pnl > 0);
+  if (won) { const g = $('#rGain'); g.textContent = `+${usd(won.pnl, 2)}`; g.classList.remove('go'); void g.offsetWidth; g.classList.add('go'); }
+  $('#rNote').textContent = d.main ? `${d.main.note || ''} · 신호방 따라가기(가상): ${d.note || ''}` : (d.note || '');
+}
+const PALETTE = ['#f7c948', '#3cc8ff', '#2fd18a', '#a98bff', '#ff9b6a', '#ff7eb6'];
+const hue = s => PALETTE[[...String(s)].reduce((a, c) => a + c.charCodeAt(0), 0) % PALETTE.length];
+// 소통방 피드가 없을 때는 LIVE 없이 커뮤니티 소개를 보여 준다
+function chatTeaser() {
+  if (!$('#cJoin').getAttribute('href')) { hideRail(railChat, $('#dChat')); return; }
+  if (!railChat.classList.contains('teasing')) {
+    railChat.classList.add('teasing'); R.chat = null;
+    $('#cTitle').textContent = '커뮤니티 소통방';
+    $('#cList').outerHTML = `<div class="teaser" id="cList"><p>시장을 움직이는 경제뉴스를 실시간으로 받고, 매매 이야기와 제작 파일을 나누는 텔레그램 소통방입니다.</p>
+      <ul><li><svg class="i"><use href="#i-news"/></svg>실시간 경제뉴스 · 지표 발표 알림</li><li><svg class="i"><use href="#i-folder"/></svg>제작 파일 자료실 · 가이드</li><li><svg class="i"><use href="#i-send"/></svg>매매 이야기 · 질문 · 업데이트 소식</li></ul></div>`;
+  }
+  showRail(railChat, $('#dChat'));
+}
+function renderChat(d) {
+  const msgs = d.messages || [];
+  if (!msgs.length) { chatTeaser(); return; }
+  if (railChat.classList.contains('teasing')) { railChat.classList.remove('teasing'); $('#cList').outerHTML = '<ul class="chat" id="cList"></ul>'; }
+  $('#dChatName').textContent = '소통방 LIVE';
+  const body = $('#cBody'), stick = !R.chat || body.scrollHeight - body.scrollTop - body.clientHeight < 60;
+  $('#cTitle').textContent = d.title || '커뮤니티 소통방';
+  $('#cList').innerHTML = msgs.map(m => `<li class="${R.chat && !R.chat.has(m.id) ? 'new' : ''}"><span class="av" style="background:${hue(m.name)}">${esc([...String(m.name)][0] || '?')}</span>
+      <div><div class="who"><b>${esc(m.name)}</b><span>${m.t ? whenKst(m.t) : ''}</span></div><div class="msg">${esc(m.text)}</div></div></li>`).join('');
+  R.chat = new Set(msgs.map(m => m.id));
+  showRail(railChat, $('#dChat'));
+  if (stick) body.scrollTop = body.scrollHeight;
+}
+async function readFeed() {
+  try {
+    const f = await fetch(`${FLY_FEED}?t=${Date.now()}`, { cache: 'no-store' }).then(r => r.json());
+    return /^https?:\/\//.test(f.feed || '') ? f.feed.replace(/\/?$/, '/') : null;
+  } catch { return null; }
+}
+async function pollExt(name, render, missing) {
+  if (!R.feed) R.feed = await readFeed();
+  if (!R.feed) { missing(); return; }
+  try {
+    const r = await fetch(`${R.feed}ext/${name}.json`, { cache: 'no-store' });
+    if (r.status === 404) { missing(); return; }
+    if (r.ok) render(await r.json());
+  } catch { R.feed = null; /* 터널 주소가 바뀌었을 수 있다 — 화면은 그대로 두고 다음 폴링에서 feed.json을 다시 읽는다 */ }
+}
+const pollRich = () => pollExt('rich', d => { renderRich(d); showRail(railRich, $('#dRich')); }, () => { hideRail(railRich, $('#dRich')); hideRichLive(); });
+const pollChat = () => pollExt('chat', renderChat, chatTeaser);
+
+// ---- 스크롤 액션 (GSAP 3.13 — 없거나 움직임 줄이기면 정적) ----
+function loadScript(src) {
+  return new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.async = false; s.onload = ok; s.onerror = no; document.head.append(s); });
+}
+function revealAll() { root.classList.remove('anim-pending'); }
+async function initMotion() {
+  if (!MOTION) { revealAll(); return; }
+  try {
+    const cdn = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/';
+    await Promise.all([loadScript(`${cdn}gsap.min.js`), loadScript(`${cdn}ScrollTrigger.min.js`)]);
+  } catch { revealAll(); return; }
+  const { gsap, ScrollTrigger } = window;
+  if (!gsap || !ScrollTrigger) { revealAll(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  gs = gsap;
+  const E = 'expo.out';
+  if (root.classList.contains('anim-pending')) {
+    gsap.set('.hero h1 .ln > span', { yPercent: 110 });
+    gsap.set('.hero h1', { visibility: 'visible' });
+    gsap.set('[data-hero]', { autoAlpha: 0, y: 26 });
+    gsap.set('.office .monitor', { rotateX: 16, rotateY: -12, scale: .9, transformPerspective: 1600 });
+    root.classList.remove('anim-pending');
+    gsap.timeline({ defaults: { ease: E } })
+      .to('.hero h1 .ln > span', { yPercent: 0, duration: 1.3, stagger: .13 }, .1)
+      .to('[data-hero]', { autoAlpha: 1, y: 0, duration: 1.1, stagger: .08 }, .45)
+      .to('.office .monitor', { rotateX: 0, rotateY: 0, scale: 1, duration: 2 }, .35);
+  }
+  const heroST = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true };
+  gsap.to('.hero-copy', { y: -70, autoAlpha: .1, ease: 'none', scrollTrigger: heroST });
+  gsap.to('.office-wrap', { y: -40, scale: .97, autoAlpha: .35, ease: 'none', scrollTrigger: { ...heroST } });
+
+  // 모든 등장은 스크롤을 다시 올리면 되감긴다
+  const RT = (trigger, start, more = {}) => ({ trigger, start, toggleActions: 'play none none reverse', ...more });
+  $$('.sec-head').forEach(h => gsap.from(h.children, { y: 34, autoAlpha: 0, duration: 1.1, stagger: .09, ease: E, scrollTrigger: RT(h, 'top 86%') }));
+  gsap.from('.org-stage', { autoAlpha: 0, scale: .94, duration: 1.3, ease: E, scrollTrigger: RT('.how', 'top 82%') });
+  steps.forEach(st => gsap.from(st.children, { y: 34, autoAlpha: 0, stagger: .07, duration: 1, ease: E, scrollTrigger: RT(st, 'top 78%') }));
+  gsap.from('#apply', { y: 50, autoAlpha: 0, duration: 1.2, ease: E, scrollTrigger: RT('#apply', 'top 92%') });
+  $$('[data-rise]').forEach(el => gsap.from(el, { y: 44, autoAlpha: 0, duration: 1.1, ease: E, scrollTrigger: RT(el, 'top 90%') }));
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  addEventListener('load', () => ScrollTrigger.refresh());
+}
+
+initMotion();
+pollTicker();
+setInterval(pollTicker, 30000);
+pollRich();
+pollChat();
+setInterval(pollRich, 20000);
+setInterval(pollChat, 8000);
+</script>
+</body>
+</html>

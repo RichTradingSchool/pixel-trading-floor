@@ -1,0 +1,117 @@
+/* PIXEL TRADING FLOOR 데모 버전 — 실제 버전 전용 UI 숨김 + 리본 + 차트 크기 + 무료 분석 끝 안내 (build.js가 hq.css 뒤에 붙인다) */
+#auto-chip, #auto-btn, #pt-btn, #rec-btn, #stats-btn, #replay-btn,
+#watcher-toggle, #watcher-stat, #mode-attack, #venue-board, #alerts-panel, #dp-card-btn,
+#lev-select { display: none !important; } /* 배율은 100배 고정 — 리본에 표시 */
+
+#lite-ribbon { display: flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 10px; letter-spacing: .5px; }
+#lite-ribbon b { background: #e8c84a; color: #1a1408; padding: 2px 6px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+#lite-ribbon .why { color: #9a9ab4; }
+#lite-ribbon .fix { color: #1a1408; background: #ff9b6a; padding: 2px 6px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; cursor: help; }
+#lite-ribbon .fx-s { display: none; }
+html.m #lite-ribbon .fx-l { display: none; }
+html.m #lite-ribbon .fx-s { display: inline; }
+/* 휴대폰: 레일이 옆으로 밀리니 데모 버전 표시·남은 횟수·자료실 링크가 워치리스트보다 먼저 보이게 */
+html.m #lite-ribbon { order: -1; flex: none; }
+#lite-ribbon em { font-style: normal; color: #7ee2a0; background: #0f2a1a; padding: 2px 6px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+#lite-ribbon em.out { color: #1a1408; background: #e8c84a; }
+#lite-ribbon a, #lite-ribbon button {
+  font: inherit; font-size: 10px; letter-spacing: .5px; color: #cfcfe0; background: #16162a;
+  border: 2px solid #000; box-shadow: 2px 2px 0 #000; padding: 3px 8px; text-decoration: none; cursor: pointer;
+}
+#lite-ribbon a:hover, #lite-ribbon button:hover { background: #e8c84a; color: #1a1408; }
+#lite-ribbon a.full { background: #1f8f5a; color: #fff; }
+html.m #lite-ribbon .why { display: none; }
+html.m #lite-ribbon a, html.m #lite-ribbon button, html.m #lite-ribbon em, html.m #lite-ribbon .fix { padding: 2px 6px; flex: none; }
+html.kiosk #lite-ribbon { display: none; }
+
+/* 첫 분석 전에는 ANALYZE가 깜빡이며 부른다 · 무료 분석을 다 쓰면 ANALYZE는 안내 창을 연다 */
+html.lite-first #analyze-btn:not(:disabled) { animation: lite-call 1s steps(2) infinite; }
+@keyframes lite-call { 50% { box-shadow: 3px 3px 0 #000, 0 0 0 3px #e8c84a; } }
+html.lite-out #analyze-btn { background: #e8c84a; color: #1a1408; animation: none; }
+
+/* 상단 차트 — 진입·목표·손절·현재가 표시가 들어가게 키운다 (범례는 차트 안에 그린다) */
+#chart-legend { display: none; }
+html:not(.m) #chart { height: clamp(104px, 15vh, 150px); }
+/* 휴대폰: 시세 한 줄 아래에 차트를 화면 폭 그대로 */
+html.m #board { flex-wrap: wrap; row-gap: 4px; }
+html.m #board-info { display: flex; flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+html.m #board-price { font-size: 17px; }
+html.m #chart-wrap { flex: 1 1 100%; }
+html.m #chart { height: 92px !important; }
+
+/* 매매 내역 창 */
+#lite-hist { position: fixed; inset: 0; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(4, 4, 10, .72); }
+#lite-hist.hidden { display: none; }
+#lite-hist .lh-box {
+  position: relative; width: min(560px, 100%); max-height: min(560px, 90vh); display: flex; flex-direction: column; padding: 18px 18px 14px;
+  background: #12121f; color: #f2f2f8; border: 3px solid #000; box-shadow: 6px 6px 0 #000, inset 0 0 0 2px #2c2c48; animation: ll-in .25s steps(4);
+}
+#lite-hist .ll-x { position: absolute; top: 8px; right: 8px; font: inherit; color: #9a9ab4; background: none; border: 0; cursor: pointer; font-size: 14px; }
+#lite-hist h2 { margin: 0 0 8px; font-size: 16px; font-weight: normal; color: #fff8e0; text-shadow: 2px 2px 0 #000; }
+#lite-hist .lh-sum { margin: 0 0 10px; font-size: 11px; line-height: 1.7; color: #cfcfe0; }
+#lite-hist .lh-sum small { display: block; color: #9a9ab4; font-size: 10px; }
+#lite-hist .lh-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; min-height: 0; border: 2px solid #000; background: #0a0a14; }
+#lite-hist .lh-list li { display: grid; grid-template-columns: 78px 1fr auto; gap: 4px 10px; align-items: baseline; padding: 6px 10px; font-size: 11px; border-bottom: 1px solid #1c1c30; }
+#lite-hist .lh-list li > span:nth-child(3) { grid-column: 1 / 3; color: #9a9ab4; }
+#lite-hist .lh-list li em { grid-row: 1 / 3; grid-column: 3; font-style: normal; text-align: right; white-space: nowrap; }
+#lite-hist .lh-list li.lh-open { background: #14142a; }
+#lite-hist .lh-list li.lh-empty { display: block; color: #9a9ab4; padding: 16px 10px; }
+#lite-hist .up { color: #3fb950; }
+#lite-hist .down { color: #f85149; }
+#lite-hist .ll-close { margin-top: 10px; align-self: center; font: inherit; font-size: 11px; color: #9a9ab4; background: none; border: 0; cursor: pointer; text-decoration: underline; }
+#lite-ribbon button#lite-hist-btn { background: #1f4f8f; color: #fff; }
+
+/* 첫 방문 안내 — 모드 고르기 → ▶ ANALYZE (브라우저마다 한 번) */
+#lite-tour {
+  position: fixed; z-index: 99990; width: min(340px, calc(100vw - 16px)); padding: 12px 14px 10px;
+  background: #12121f; color: #f2f2f8; border: 3px solid #000; box-shadow: 5px 5px 0 #000, inset 0 0 0 2px #e8c84a;
+  font-size: 11px; line-height: 1.7; animation: ll-in .25s steps(4);
+}
+#lite-tour.hidden { display: none; }
+#lite-tour .lt-step { display: inline-block; margin-bottom: 8px; font-size: 10px; letter-spacing: 1.5px; color: #1a1408; background: #e8c84a; padding: 2px 7px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+#lite-tour p { margin: 0 0 6px; color: #cfcfe0; }
+#lite-tour p b { color: #fff8e0; font-weight: normal; }
+#lite-tour p em { font-style: normal; color: #e8c84a; }
+#lite-tour .lt-big { font-size: 14px; color: #fff8e0; animation: lite-tour-blink 1s steps(2) infinite; }
+#lite-tour .lt-big b { color: #e8c84a; }
+#lite-tour .lt-note { font-size: 10px; color: #9a9ab4; }
+#lite-tour .lt-row { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+#lite-tour button { font: inherit; font-size: 11px; cursor: pointer; padding: 4px 10px; color: #cfcfe0; background: #16162a; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+#lite-tour button.lt-next { color: #1a1408; background: #e8c84a; }
+#lite-tour button:active { transform: translate(2px, 2px); box-shadow: none; }
+#lite-tour .lt-arrow { position: absolute; width: 12px; height: 12px; background: #12121f; border: 3px solid #000; transform: rotate(45deg); }
+#lite-tour[data-at="below"] .lt-arrow { top: -9px; border-right: 0; border-bottom: 0; }
+#lite-tour[data-at="above"] .lt-arrow { bottom: -9px; border-left: 0; border-top: 0; }
+.lite-tour-on { outline: 3px solid #e8c84a !important; outline-offset: 3px; }
+#mode-toggle.lite-tour-on { animation: lite-tour-blink 1s steps(2) infinite; }
+@keyframes lite-tour-blink { 50% { outline-color: transparent; opacity: .72; } }
+@media (prefers-reduced-motion: reduce) {
+  #lite-tour, #lite-tour .lt-big, #mode-toggle.lite-tour-on, html.lite-first #analyze-btn:not(:disabled) { animation: none; }
+}
+
+/* 무료 분석 끝 안내 */
+#lite-limit { position: fixed; inset: 0; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(4, 4, 10, .72); }
+#lite-limit.hidden { display: none; }
+#lite-limit .ll-box {
+  position: relative; width: min(460px, 100%); padding: 22px 22px 18px; background: #12121f; color: #f2f2f8;
+  border: 3px solid #000; box-shadow: 6px 6px 0 #000, inset 0 0 0 2px #2c2c48; text-align: center; animation: ll-in .25s steps(4);
+}
+@keyframes ll-in { from { transform: translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+#lite-limit .ll-x { position: absolute; top: 8px; right: 8px; font: inherit; color: #9a9ab4; background: none; border: 0; cursor: pointer; font-size: 14px; }
+#lite-limit .ll-badge { display: inline-block; font-size: 10px; letter-spacing: 2px; color: #1a1408; background: #e8c84a; padding: 3px 8px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+#lite-limit h2 { margin: 14px 0 12px; font-size: 18px; font-weight: normal; color: #fff8e0; text-shadow: 2px 2px 0 #000; }
+#lite-limit .ll-score { display: grid; gap: 4px; margin: 0 auto 14px; padding: 10px 12px; background: #0a0a14; border: 2px solid #000; box-shadow: inset 0 0 0 2px #22223a; }
+#lite-limit .ll-score span { font-size: 10px; color: #9a9ab4; letter-spacing: 1px; }
+#lite-limit .ll-score b { font-size: 16px; font-weight: normal; }
+#lite-limit .ll-score em { font-style: normal; font-size: 14px; color: #cfcfe0; }
+#lite-limit .ll-score em.up { color: #3fb950; }
+#lite-limit .ll-score em.down { color: #f85149; }
+#lite-limit .ll-score small { font-size: 10px; color: #9a9ab4; }
+#lite-limit p { margin: 0 0 16px; font-size: 12px; line-height: 1.7; color: #cfcfe0; }
+#lite-limit .ll-go {
+  display: block; padding: 12px 10px; font-size: 14px; color: #fff; text-decoration: none; background: #1f8fd0;
+  border: 3px solid #000; box-shadow: 4px 4px 0 #000;
+}
+#lite-limit .ll-go:hover { filter: brightness(1.12); }
+#lite-limit .ll-go:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+#lite-limit .ll-close { margin-top: 12px; font: inherit; font-size: 11px; color: #9a9ab4; background: none; border: 0; cursor: pointer; text-decoration: underline; }
