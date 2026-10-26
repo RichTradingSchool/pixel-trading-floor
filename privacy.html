@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>개인정보 처리방침 — PIXEL TRADING FLOOR</title>
+<meta name="theme-color" content="#05070c">
+<link rel="stylesheet" href="base.css">
+<!-- 독립 문서 — 빌드(lite/build.js renderPrivacy)가 운영 주체·책임자·연락처·시행일·받기 서버 주소 자리표시자를 채운다. 관문(dl_base)이 열렸을 때만 만든다 -->
+<style>
+main{max-width:860px;margin:0 auto;padding:40px 20px 72px}
+h1{font-size:26px;line-height:1.35;margin:0 0 10px}
+h2{font-size:18px;line-height:1.4;margin:36px 0 10px}
+p,li{color:var(--text-2);margin:8px 0}
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px;line-height:1.55}
+th,td{border:1px solid var(--line-2);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface-2);color:var(--text)}
+td{color:var(--text-2)}
+.back{margin-top:44px}
+.back a{color:var(--gold);font-weight:700}
+</style>
+</head>
+<body>
+<main>
+<h1>개인정보 처리방침</h1>
+<p>PIXEL TRADING FLOOR 소개 페이지에서 PC·모바일 버전을 받거나 1:1 문의를 보낼 때 처리하는 개인정보를 안내합니다.</p>
+
+<h2>1. 처리하는 정보와 목적·보유 기간</h2>
+<div class="tw">
+<table>
+<tr><th>구분</th><th>처리 항목</th><th>목적</th><th>보유 기간</th></tr>
+<tr><td>받기 — 배정 상태</td><td>받기 서버 쿠키 값, 방문자 번호, 담당자, 첫 배정 이유·줄(첫 행동 종류)·유입, 원래 담당자, 처음·마지막 이용 시각</td><td>같은 분께 같은 담당자를 이어 드리고 반복 요청을 막기 위해</td><td>마지막 이용 후 1년</td></tr>
+<tr><td>받기 — IP 기록</td><td>IP 변환값(원문 IP는 저장하지 않습니다), 담당자, 첫 배정 시각</td><td>같은 곳에서 다시 받을 때 같은 담당자를 이어 드리기 위해</td><td>첫 배정 후 30일(연장 없음)</td></tr>
+<tr><td>받기·문의 — 이용 기록</td><td>시각, 종류, 방문자 번호, 담당자, 신규 배정 여부·이유, 줄(첫 행동 종류), 유입, 기기 종류, 판 버전, 받은 크기, IP 변환값 앞 6자리, IP 대역·통신망 변환값</td><td>배정 통계와 자동 요청 감시</td><td>이용 기록 1년 · IP 대역·통신망 변환값 90일</td></tr>
+<tr><td>1:1 문의</td><td>접수 시각, 문의 번호, 문의 종류, 텔레그램 아이디 또는 닉네임, 문의 내용, 방문자 번호, 담당자, 유입, 전달 상태</td><td>문의에 답하기 위해(담당자에게 전달)</td><td>접수 후 180일</td></tr>
+</table>
+</div>
+<p>IP 변환값은 비밀 키로 바꾼 값으로, 그 키 없이는 개인을 알아볼 수 없는 가명정보입니다.</p>
+<p>받기에서 남기는 값은 중복 배정과 반복 요청을 막는 데 필요한 범위만 둡니다.</p>
+<p>1:1 문의는 이용자가 요청한 문의에 답하는 데 필요한 범위에서 처리합니다(개인정보 보호법 제15조 제1항 제4호).</p>
+<p>만 19세 이상만 이용할 수 있습니다.</p>
+<p>문의로 받은 연락처로는 문의 답변만 하며, 광고·홍보 메시지를 보내지 않습니다.</p>
+
+<h2>2. 파기</h2>
+<p>보유 기간이 지난 기록은 받기 서버의 예약 작업이 매일 지웁니다.</p>
+<p>받기 서버 데이터베이스의 백업(시점 복구)에는 지운 기록이 최대 30일 남을 수 있습니다.</p>
+<p>담당자 알림방 카드와 분배 서버에 있는 닉네임·문의 내용도 접수 후 180일이 지나면 지웁니다.</p>
+
+<h2>3. 처리위탁·국외 이전</h2>
+<p>아래 받는 곳에 개인정보 처리를 맡기거나, 개인정보가 해외 서버로 옮겨집니다.</p>
+<div class="tw">
+<table>
+<tr><th>받는 곳</th><th>국가</th><th>이전 시기·방법</th><th>목적</th><th>보유 기간</th><th>거부 방법</th></tr>
+<tr><td>Cloudflare, Inc.</td><td>미국</td><td>받기·문의할 때 네트워크로 전송(문의 칸을 처음 누르거나 입력할 때의 사람 확인 포함)</td><td>받기 서버 운영·기록 저장·자동 요청 차단(사람 확인)</td><td>위 표의 보유 기간</td><td>받기·문의를 이용하지 않으면 이전되지 않습니다(이 경우 받기·문의를 이용할 수 없습니다)</td></tr>
+<tr><td>Telegram</td><td>해외</td><td>문의 접수 뒤 담당자 알림방으로 전송</td><td>담당자에게 문의 전달</td><td>접수 후 180일</td><td>1:1 문의를 이용하지 않으면 이전되지 않습니다</td></tr>
+<tr><td>Amazon Web Services(서울 리전)</td><td>대한민국</td><td>문의 접수 뒤 분배 서버가 가져감</td><td>담당자 배정·알림 서버 운영</td><td>접수 후 180일</td><td>1:1 문의를 이용하지 않으면 이전되지 않습니다</td></tr>
+<tr><td>담당 영업자(회사 업무 위탁)</td><td>대한민국</td><td>문의 접수 뒤 텔레그램으로</td><td>문의 답변(답변 외 연락·목적 외 이용 금지)</td><td>접수 후 180일 · 위탁이 끝나면 파기</td><td>1:1 문의를 이용하지 않으면 이전되지 않습니다</td></tr>
+</table>
+</div>
+
+<h2>4. 자동으로 남기는 장치와 거부 방법</h2>
+<div class="tw">
+<table>
+<tr><th>장치</th><th>무엇</th><th>보관</th></tr>
+<tr><td><code>c</code></td><td>받기 서버(get.tradingfloor.cloud)가 처음 배정할 때 심는 쿠키</td><td>최대 1년</td></tr>
+<tr><td><code>ptf_vid</code></td><td>이 사이트 브라우저 저장소에 두는 방문자 번호(무작위 값)</td><td>브라우저에서 지울 때까지(아이폰 Safari 등은 7일 동안 방문이 없으면 지울 수 있습니다)</td></tr>
+<tr><td><code>ptf_r</code></td><td>담당자 링크로 들어온 경우 그 링크 값</td><td>30일</td></tr>
+<tr><td><code>ptf_last_ask</code></td><td>지난 문의 번호와 담당자 연락 링크(이 브라우저에만 있고 보내지 않습니다)</td><td>30일</td></tr>
+</table>
+</div>
+<p>브라우저 설정에서 쿠키·사이트 데이터를 막거나 지울 수 있습니다. 지우면 다시 받을 때 다른 담당자가 배정될 수 있습니다.</p>
+
+<h2>5. 열람·정정·삭제·처리정지 요구</h2>
+<p>연락처(contact@pap.co.kr)로 닉네임과 문의 번호를 알려 주시면 10일 안에 처리하고 결과를 알려 드립니다.</p>
+
+<h2>6. 개인정보 보호책임자</h2>
+<p>한정훈 · 연락처 contact@pap.co.kr</p>
+
+<h2>7. 운영 주체</h2>
+<p>PAP</p>
+
+<h2>8. 시행일</h2>
+<p>이 방침은 2026-10-20부터 시행합니다.</p>
+
+<p class="back"><a href="./">소개 페이지로</a></p>
+</main>
+</body>
+</html>
